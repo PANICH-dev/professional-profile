@@ -469,13 +469,37 @@
     <!-- Project 1.5: Customer Warranty Portal -->
     <section id="customer-portal" class="bg-[#0F172A] text-white border-y border-[#1E293B]">
         <div class="max-w-7xl mx-auto px-6 py-16">
-            <div class="text-center mb-16">
+            <div class="text-center mb-12">
                 <div class="text-xs font-bold text-yellow-400 tracking-widest uppercase mb-3 inline-block border border-yellow-400/50 rounded-full px-3 py-1 bg-yellow-400/10">Full-Stack Serverless Web App</div>
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Online Warranty Check Portal</h2>
                 <div class="w-12 h-1 bg-yellow-400 mx-auto mb-6"></div>
                 <p class="text-slate-300 font-light text-lg max-w-3xl mx-auto leading-relaxed">
-                    ยกระดับ Customer Experience โดยพัฒนาระบบตรวจสอบใบรับประกันออนไลน์ เชื่อมโยงประสบการณ์แบบ <strong>O2O (Offline to Online)</strong> ลูกค้าสามารถ <span class="text-white font-semibold border-b border-yellow-400">สแกน QR Code จากบัตรแข็ง และกรอกข้อมูลเพื่อเช็คสถานะได้ทันที</span>
+                    ยกระดับ Customer Experience โดยพัฒนาระบบตรวจสอบใบรับประกันออนไลน์ เชื่อมโยงประสบการณ์แบบ <strong>O2O (Offline to Online)</strong>
                 </p>
+            </div>
+
+            <!-- Digital Warranty Highlight Banner (NEW) -->
+            <div class="bg-gradient-to-br from-indigo-900 to-[#0F172A] p-8 rounded-3xl border border-white/10 text-center text-white mb-16 shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-yellow-400 opacity-5 rounded-bl-full"></div>
+                <div class="absolute bottom-0 left-0 w-40 h-40 bg-blue-500 opacity-10 rounded-tr-full"></div>
+                
+                <h3 class="text-2xl md:text-3xl font-bold mb-8 relative z-10 text-yellow-400">Digital Warranty Passport</h3>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-8 lg:gap-12 relative z-10">
+                    <div class="bg-white p-3 rounded-2xl shadow-[0_0_30px_rgba(250,204,21,0.15)] transform transition hover:scale-105 duration-300">
+                        <img src="การ์ดรับประกันXPEL QR_FINAL-02.jpg" alt="Scan Warranty QR" class="w-48 h-48 md:w-56 md:h-56 object-cover rounded-xl border border-gray-100" onerror="this.src='https://placehold.co/400x400/f5f5f5/333?text=QR+Code'">
+                    </div>
+                    <div class="text-left max-w-lg">
+                        <p class="text-slate-300 font-light mb-6 text-lg leading-relaxed">
+                            เปลี่ยนรูปแบบการรับประกันแบบเดิมสู่ <strong class="text-white font-medium border-b border-yellow-400/50 pb-1">ระบบออนไลน์ 100%</strong> ลืมบัตรแข็งหรือเอกสารที่อาจสูญหายได้เลย! เพียงสแกน QR Code ประจำตัวรถ ระบบจะดึงข้อมูลการรับประกันทั้งหมดขึ้นมาแสดงทันที
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm font-medium">
+                            <span class="flex items-center gap-3 text-green-400 bg-white/5 py-2.5 px-4 rounded-xl border border-white/10"><span class="text-lg">📱</span> Scan & Check</span>
+                            <span class="flex items-center gap-3 text-green-400 bg-white/5 py-2.5 px-4 rounded-xl border border-white/10"><span class="text-lg">🌿</span> Paperless</span>
+                            <span class="flex items-center gap-3 text-yellow-400 bg-white/5 py-2.5 px-4 rounded-xl border border-white/10"><span class="text-lg">⚡</span> Real-Time Status</span>
+                            <span class="flex items-center gap-3 text-blue-400 bg-white/5 py-2.5 px-4 rounded-xl border border-white/10"><span class="text-lg">🔒</span> Secure API</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Warranty Flow Display (Uncropped side by side) -->
@@ -485,8 +509,8 @@
                 <div class="w-full lg:w-1/2 flex flex-col">
                     <div class="bg-white/5 p-6 rounded-t-2xl border-x border-t border-white/10 text-center">
                         <div class="inline-block w-8 h-8 bg-yellow-400 text-[#0F172A] font-bold rounded-full mb-3 flex items-center justify-center mx-auto">1</div>
-                        <h4 class="text-yellow-400 font-semibold mb-2">QR Scan & Login</h4>
-                        <p class="text-sm text-slate-400 font-light">ลูกค้าสแกนบัตรและกรอกข้อมูล</p>
+                        <h4 class="text-yellow-400 font-semibold mb-2">QR Scan & Authentication</h4>
+                        <p class="text-sm text-slate-400 font-light">ลูกค้าสแกน QR Code และระบุป้ายทะเบียน</p>
                     </div>
                     <div class="mockup-browser w-full flex-grow border-white/10 rounded-t-none">
                         <div class="mockup-header bg-[#1E293B] border-white/10">
@@ -760,4 +784,3 @@
     </footer>
 </body>
 </html>
-```

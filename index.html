@@ -451,25 +451,181 @@
                 </div>
             </div>
 
-            <!-- Block 1: UI & Visuals -->
-            <div class="bg-white rounded-3xl p-6 md:p-10 shadow-xl border border-slate-200 mb-12">
-                <div class="flex flex-col lg:flex-row gap-10 items-center">
-                    <div class="w-full lg:w-1/3">
-                        <div class="flex items-center gap-3 mb-4">
-                            <div class="w-12 h-12 bg-[#003220] rounded-xl flex items-center justify-center shadow-lg"><i class="fa-solid fa-desktop text-white text-xl">💻</i></div>
-                            <h3 class="text-2xl font-bold text-[#0F172A]">Frontend UI (SPA)</h3>
+            <!-- ======================================================== -->
+            <!-- UI/UX SHOWCASE (Feature Gallery) -->
+            <!-- ======================================================== -->
+            <div class="mb-16 mt-16">
+                <div class="text-center mb-10">
+                    <div class="text-xs font-bold text-blue-600 tracking-widest uppercase mb-2">System Interfaces</div>
+                    <h3 class="text-3xl font-bold text-[#0F172A] mb-4">Intuitive User Interface & Experience</h3>
+                    <p class="text-slate-500 font-light max-w-2xl mx-auto">ออกแบบหน้าจอโดยยึดผู้ใช้งานเป็นศูนย์กลาง (User-Centric) เปลี่ยนกระบวนการทำงานที่ซับซ้อนให้กลายเป็น Web App ที่ใช้งานง่าย สบายตา และมีประสิทธิภาพสูงในทุกแผนก</p>
+                </div>
+
+                <div class="space-y-12 max-w-6xl mx-auto">
+                    
+                    <!-- UI 1: Executive Dashboard -->
+                    <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-slate-200 flex flex-col lg:flex-row gap-8 items-center group hover:border-blue-300 transition-colors">
+                        <div class="w-full lg:w-1/3 order-2 lg:order-1">
+                            <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-xl font-black mb-4"><i class="fa-solid fa-chart-pie"></i></div>
+                            <h4 class="text-xl font-bold text-[#0F172A] mb-2">Executive Dashboard</h4>
+                            <p class="text-sm text-slate-500 leading-relaxed mb-4">
+                                ศูนย์กลางข้อมูลสำหรับผู้บริหาร สรุปสถิติ KPIs การทำงาน การเงิน และภาพรวมองค์กรแบบ Real-time
+                            </p>
+                            <ul class="space-y-2 text-sm text-slate-600 font-medium">
+                                <li class="flex items-start gap-2"><i class="fa-solid fa-check text-green-500 mt-1"></i> ติดตามเป้าหมายรถเข้า-ออก และรายได้รายวัน/เดือน</li>
+                                <li class="flex items-start gap-2"><i class="fa-solid fa-check text-green-500 mt-1"></i> Data Visualization ที่ออกแบบมาให้อ่านค่าง่ายและตัดสินใจได้ทันที</li>
+                            </ul>
                         </div>
-                        <h4 class="font-semibold text-slate-700 mb-2">Service Advisor Portal</h4>
-                        <p class="text-sm text-slate-500 leading-relaxed mb-6">
-                            ออกแบบ UI/UX ให้พนักงานรับรถใช้งานง่ายที่สุด ดึง Master Data จาก PostgreSQL มาแสดงบน Dropdown แบบ Real-time
-                        </p>
-                        <ul class="space-y-2 text-sm text-slate-600 font-medium">
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> Form Validation ป้องกันคีย์ผิด</li>
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> Responsive Web Design</li>
-                        </ul>
+                        <div class="w-full lg:w-2/3 order-1 lg:order-2 rounded-xl overflow-hidden shadow-md border border-slate-100 bg-slate-50 p-2">
+                            <img src="ds1.jpg" alt="Executive Dashboard UI" class="w-full h-auto object-cover rounded shadow-sm transform group-hover:scale-[1.01] transition-transform duration-500">
+                        </div>
                     </div>
-                    <div class="w-full lg:w-2/3 rounded-xl overflow-hidden shadow-2xl border border-slate-300">
-                        <img src="Screenshot 2026-06-30 175457.png" alt="RIZENIC Frontend UI" class="w-full h-auto object-cover" onerror="this.src='https://placehold.co/800x450/003220/ffffff?text=RIZENIC+Frontend'">
+
+                    <!-- UI 2: Repair Station -->
+                    <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-slate-200 flex flex-col lg:flex-row gap-8 items-center group hover:border-orange-300 transition-colors">
+                        <div class="w-full lg:w-2/3 rounded-xl overflow-hidden shadow-md border border-slate-100 bg-slate-50 p-2">
+                            <img src="re1.jpg" alt="Repair Station UI" class="w-full h-auto object-cover rounded shadow-sm transform group-hover:scale-[1.01] transition-transform duration-500">
+                        </div>
+                        <div class="w-full lg:w-1/3">
+                            <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-xl flex items-center justify-center text-xl font-black mb-4"><i class="fa-solid fa-wrench"></i></div>
+                            <h4 class="text-xl font-bold text-[#0F172A] mb-2">Repair Station Tracking</h4>
+                            <p class="text-sm text-slate-500 leading-relaxed mb-4">
+                                ระบบติดตามคิวงานซ่อมตามสถานี (WIP Tracking) ช่วยให้หัวหน้าช่างมองเห็นคอขวด (Bottleneck) ของงานได้ทันที
+                            </p>
+                            <ul class="space-y-2 text-sm text-slate-600 font-medium">
+                                <li class="flex items-start gap-2"><i class="fa-solid fa-check text-green-500 mt-1"></i> จัดกลุ่มสถานะงานทั้ง 12 สถานีด้วย Color-Coded</li>
+                                <li class="flex items-start gap-2"><i class="fa-solid fa-check text-green-500 mt-1"></i> แจ้งเตือนรถที่ซ่อมล่าช้า (Overdue) ป้องกันงานหลุด</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- UI 3: Finance & Billing -->
+                    <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-slate-200 flex flex-col lg:flex-row gap-8 items-center group hover:border-emerald-300 transition-colors">
+                        <div class="w-full lg:w-1/3 order-2 lg:order-1">
+                            <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center text-xl font-black mb-4"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                            <h4 class="text-xl font-bold text-[#0F172A] mb-2">Finance & Billing Center</h4>
+                            <p class="text-sm text-slate-500 leading-relaxed mb-4">
+                                แดชบอร์ดสำหรับแผนกบัญชี เพื่อติดตามสถานะการวางบิล และประเมินตัวเลขทางการเงินแบบแยกหมวดหมู่
+                            </p>
+                            <ul class="space-y-2 text-sm text-slate-600 font-medium">
+                                <li class="flex items-start gap-2"><i class="fa-solid fa-check text-green-500 mt-1"></i> แยกตัวเลขงานที่รอจัดการ และงานที่ออกบิลแล้วชัดเจน</li>
+                                <li class="flex items-start gap-2"><i class="fa-solid fa-check text-green-500 mt-1"></i> อินเตอร์เฟซแบบมินิมอล ช่วยลดความเครียดในการจัดการตัวเลข</li>
+                            </ul>
+                        </div>
+                        <div class="w-full lg:w-2/3 order-1 lg:order-2 rounded-xl overflow-hidden shadow-md border border-slate-100 bg-slate-50 p-2">
+                            <img src="a1.jpg" alt="Finance Dashboard UI" class="w-full h-auto object-cover rounded shadow-sm transform group-hover:scale-[1.01] transition-transform duration-500">
+                        </div>
+                    </div>
+
+                    <!-- UI 4: Admin Panel -->
+                    <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-slate-200 flex flex-col lg:flex-row gap-8 items-center group hover:border-slate-800 transition-colors">
+                        <div class="w-full lg:w-2/3 rounded-xl overflow-hidden shadow-md border border-slate-100 bg-slate-50 p-2">
+                            <img src="admin.jpg" alt="Admin Panel UI" class="w-full h-auto object-cover rounded shadow-sm transform group-hover:scale-[1.01] transition-transform duration-500">
+                        </div>
+                        <div class="w-full lg:w-1/3">
+                            <div class="w-12 h-12 bg-slate-800 text-white rounded-xl flex items-center justify-center text-xl font-black mb-4"><i class="fa-solid fa-sliders"></i></div>
+                            <h4 class="text-xl font-bold text-[#0F172A] mb-2">Security & Admin Panel</h4>
+                            <p class="text-sm text-slate-500 leading-relaxed mb-4">
+                                ระบบบริหารจัดการสิทธิ์ผู้ใช้งาน (Access Control) และฐานข้อมูลตั้งต้น (Master Data) สำหรับผู้ดูแลระบบ
+                            </p>
+                            <ul class="space-y-2 text-sm text-slate-600 font-medium">
+                                <li class="flex items-start gap-2"><i class="fa-solid fa-check text-green-500 mt-1"></i> ควบคุมสิทธิ์การเข้าถึงเมนูต่างๆ แบบแยกรายบุคคล (Role-based)</li>
+                                <li class="flex items-start gap-2"><i class="fa-solid fa-check text-green-500 mt-1"></i> จัดการฐานข้อมูลพนักงาน สาขา และข้อมูลระบบจากจุดเดียว</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ======================================================== -->
+            <!-- ERP MODULES & WORKFLOW (End-to-End Data Flow) -->
+            <!-- ======================================================== -->
+            <div class="bg-[#0F172A] rounded-3xl p-6 md:p-10 shadow-xl border border-slate-800 mb-12 relative overflow-hidden">
+                <!-- Background Effects -->
+                <div class="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="relative z-10">
+                    <div class="flex flex-col md:flex-row justify-between items-end mb-10 gap-6 border-b border-slate-700/50 pb-6">
+                        <div class="max-w-3xl">
+                            <div class="text-xs font-bold text-blue-400 tracking-widest uppercase mb-3 flex items-center gap-2">
+                                <span class="relative flex h-3 w-3"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span><span class="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span></span>
+                                End-to-End ERP Modules
+                            </div>
+                            <h3 class="text-3xl font-bold text-white mb-3">Seamless Data Flow & Department Integration</h3>
+                            <p class="text-slate-400 font-light text-sm leading-relaxed">
+                                ออกแบบระบบบริหารจัดการแบบรวมศูนย์ (Centralized ERP) ครอบคลุมทุกแผนกตั้งแต่ลูกค้านำรถเข้าศูนย์จนถึงการปิดงบบัญชี ขจัดปัญหาการคีย์ข้อมูลซ้ำซ้อน (Data Silos) ด้วยการใช้ Job ID เป็นแกนกลางในการเชื่อมโยงข้อมูลแบบ Real-time
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Workflow Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 relative">
+                        
+                        <!-- Connecting Line (Desktop only) -->
+                        <div class="hidden lg:block absolute top-12 left-10 right-10 h-0.5 bg-gradient-to-r from-blue-500 via-amber-500 to-emerald-500 z-0 opacity-30"></div>
+
+                        <!-- 1. Service Advisor -->
+                        <div class="bg-[#1E293B] rounded-2xl p-5 border border-slate-700 hover:border-blue-400 transition-all relative z-10 group">
+                            <div class="w-14 h-14 bg-blue-500/20 text-blue-400 rounded-xl flex items-center justify-center text-2xl mb-4 border border-blue-500/30 group-hover:scale-110 transition-transform">📝</div>
+                            <h4 class="text-white font-bold text-sm mb-2">1. Service Advisor (SA)</h4>
+                            <ul class="text-xs text-slate-400 font-light space-y-1.5 list-disc pl-4">
+                                <li>สร้างใบงาน (Job Order)</li>
+                                <li>ประเมินชิ้นงานทำสี (Main/Sub)</li>
+                                <li>ระบบตัดโควต้างานรายวันอัตโนมัติ</li>
+                                <li>Dynamic Routing ส่งต่อแผนก</li>
+                            </ul>
+                        </div>
+
+                        <!-- 2. Repair Station -->
+                        <div class="bg-[#1E293B] rounded-2xl p-5 border border-slate-700 hover:border-orange-400 transition-all relative z-10 group mt-0 lg:mt-8">
+                            <div class="w-14 h-14 bg-orange-500/20 text-orange-400 rounded-xl flex items-center justify-center text-2xl mb-4 border border-orange-500/30 group-hover:scale-110 transition-transform">🛠️</div>
+                            <h4 class="text-white font-bold text-sm mb-2">2. Repair Tracking</h4>
+                            <ul class="text-xs text-slate-400 font-light space-y-1.5 list-disc pl-4">
+                                <li>กระดานติดตามรถกำลังซ่อม</li>
+                                <li>อัปเดตสถานะ 12 สถานีช่าง</li>
+                                <li>เปรียบเทียบ Target vs Actual</li>
+                                <li>แจ้งเตือนงานล่าช้า (Overdue)</li>
+                            </ul>
+                        </div>
+
+                        <!-- 3. Parts & Inventory -->
+                        <div class="bg-[#1E293B] rounded-2xl p-5 border border-slate-700 hover:border-purple-400 transition-all relative z-10 group">
+                            <div class="w-14 h-14 bg-purple-500/20 text-purple-400 rounded-xl flex items-center justify-center text-2xl mb-4 border border-purple-500/30 group-hover:scale-110 transition-transform">📦</div>
+                            <h4 class="text-white font-bold text-sm mb-2">3. Parts & Inventory</h4>
+                            <ul class="text-xs text-slate-400 font-light space-y-1.5 list-disc pl-4">
+                                <li>ออกใบสั่งซื้ออะไหล่ (PO Tracking)</li>
+                                <li>เชื่อมสถานะกลับไปให้ SA Real-time</li>
+                                <li>ระบบรับเข้า (Inbound) / เบิกจ่าย</li>
+                                <li>เช็ค Safety Stock จาก Master Data</li>
+                            </ul>
+                        </div>
+
+                        <!-- 4. Finance & Accounting -->
+                        <div class="bg-[#1E293B] rounded-2xl p-5 border border-slate-700 hover:border-emerald-400 transition-all relative z-10 group mt-0 lg:mt-8">
+                            <div class="w-14 h-14 bg-emerald-500/20 text-emerald-400 rounded-xl flex items-center justify-center text-2xl mb-4 border border-emerald-500/30 group-hover:scale-110 transition-transform">💵</div>
+                            <h4 class="text-white font-bold text-sm mb-2">4. Finance & Billing</h4>
+                            <ul class="text-xs text-slate-400 font-light space-y-1.5 list-disc pl-4">
+                                <li>โต๊ะทำงานบัญชี (Excel Mode)</li>
+                                <li>คำนวณต้นทุน (ค่าแรง/อะไหล่/งานนอก)</li>
+                                <li>ติดตามสถานะวางบิลประกัน/เงินสด</li>
+                                <li>ระบบ Export Data สู่ Excel</li>
+                            </ul>
+                        </div>
+
+                        <!-- 5. Executive Dashboard -->
+                        <div class="bg-[#1E293B] rounded-2xl p-5 border border-slate-700 hover:border-amber-400 transition-all relative z-10 group">
+                            <div class="w-14 h-14 bg-amber-500/20 text-amber-400 rounded-xl flex items-center justify-center text-2xl mb-4 border border-amber-500/30 group-hover:scale-110 transition-transform">📊</div>
+                            <h4 class="text-white font-bold text-sm mb-2">5. Executive Dashboard</h4>
+                            <ul class="text-xs text-slate-400 font-light space-y-1.5 list-disc pl-4">
+                                <li>สรุปสถิติ KPI ประจำวัน/เดือน</li>
+                                <li>กราฟวิเคราะห์รายได้และ Workload</li>
+                                <li>ปฏิทินปฏิบัติงาน (Calendar View)</li>
+                                <li>Push Notification ส่งเข้า LINE กลุ่ม</li>
+                            </ul>
+                        </div>
+
                     </div>
                 </div>
             </div>

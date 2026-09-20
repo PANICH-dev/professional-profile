@@ -9,22 +9,18 @@
     <!-- SEO Meta Tags -->
     <meta name="description" content="Panich Thimayom - Business Systems Analyst specializing in Business Analysis, Process Design, System Development, Data & BI, and Digital Transformation.">
     <meta name="author" content="Panich Thimayom">
-    <meta name="keywords" content="Business Systems Analyst, Business Analyst, System Analyst, Solution Design, Digital Transformation, RIZENIC ERP, XPEL, TERN TMS">
-
-    <!-- Open Graph for Social Sharing -->
-    <meta property="og:title" content="Panich Thimayom | Business Systems Analyst Portfolio">
-    <meta property="og:description" content="I turn business problems into practical digital systems. View my Business Analysis & System Design Portfolio.">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="S__41730082.jpg">
-
+    
     <!-- CDNs -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Mermaid.js for Rendering Interactive ERD -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 
-    <!-- Google Font -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -45,20 +41,16 @@
             line-height: 1.6;
         }
 
+        .font-code { font-family: 'Fira Code', monospace; }
+
         ::selection { background: var(--navy); color: white; }
 
-        ::-webkit-scrollbar { width: 7px; }
+        ::-webkit-scrollbar { width: 7px; height: 7px; }
         ::-webkit-scrollbar-track { background: #F1F5F9; }
         ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 999px; }
         ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
 
         section { scroll-margin-top: 80px; }
-
-        .gradient-text {
-            background: linear-gradient(90deg, #0F172A, #2563EB);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
 
         .glass-nav {
             background: rgba(255,255,255,.92);
@@ -66,130 +58,53 @@
             -webkit-backdrop-filter: blur(14px);
         }
 
-        .soft-card {
-            transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+        .soft-card { transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+        .soft-card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(15,23,42,.08); }
+
+        /* 🔥 ปรับให้ ERD พอดีหน้ากระดาษ ไหลลงเป็นแนวตั้ง และไม่ตกขอบเวลา Print */
+        .mermaid svg {
+            max-width: 100% !important;
+            height: auto !important;
+            margin: 0 auto;
+            display: block;
         }
-
-        .soft-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 18px 40px rgba(15,23,42,.08);
-        }
-
-        .project-number {
-            font-size: clamp(4rem, 10vw, 8rem);
-            line-height: .8;
-            font-weight: 700;
-            color: rgba(15,23,42,.045);
-            position: absolute;
-            right: 0;
-            top: 0;
-            pointer-events: none;
-        }
-
-        .timeline-dot {
-            position: relative;
-            z-index: 2;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: white;
-            border: 4px solid #2563EB;
-            flex-shrink: 0;
-        }
-
-        .browser {
-            border: 1px solid #E2E8F0;
-            border-radius: 18px;
-            overflow: hidden;
-            background: white;
-            box-shadow: 0 15px 35px rgba(15,23,42,.08);
-        }
-
-        .browser-header {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 11px 14px;
-            background: #F1F5F9;
-            border-bottom: 1px solid #E2E8F0;
-        }
-
-        .browser-dot { width: 9px; height: 9px; border-radius: 50%; }
-        .dot-red { background:#EF4444; }
-        .dot-yellow { background:#F59E0B; }
-        .dot-green { background:#10B981; }
-
-        .card-stack {
-            position: relative;
-            width: min(320px, 85vw);
-            height: 210px;
-            cursor: pointer;
-        }
-
-        .card-stack img { width: 100%; height: 100%; object-fit: cover; }
-
-        .card-back, .card-front {
-            position: absolute;
-            inset: 0;
-            border-radius: 18px;
-            overflow: hidden;
-            border: 1px solid #334155;
-            transition: .45s ease;
-        }
-
-        .card-back { transform: translate(18px, 12px) rotate(5deg); opacity: .85; }
-        .card-front { z-index: 2; }
-
-        .card-stack:hover .card-back { transform: translate(48px, 18px) rotate(8deg); }
-        .card-stack:hover .card-front { transform: translate(-12px, -5px) rotate(-3deg); opacity: 0.85; }
 
         .mobile-menu { display: none; }
         .mobile-menu.active { display: block; }
 
-        /* การตั้งค่าหน้า PDF / Print ให้สวยงามแบบ Resume */
         @media print {
             @page { margin: 1cm; size: A4 portrait; }
-            body { background: white !important; color: #111 !important; font-size: 11pt !important; }
+            body { background: white !important; color: #111 !important; font-size: 10pt !important; }
             nav, .mobile-menu, .no-print, button, .blur-3xl { display: none !important; }
-            
             section { padding: 20px 0 !important; page-break-inside: auto; border: none !important; background: white !important; }
-            
-            /* ป้องกันการถูกตัดหน้ากระดาษ */
-            .soft-card, .browser, img, .grid > div, .card-stack { page-break-inside: avoid; break-inside: avoid; }
+            .soft-card, img, .avoid-break { page-break-inside: avoid; break-inside: avoid; }
             h1, h2, h3, h4 { page-break-after: avoid; }
-            
-            /* ปรับสีที่ซ่อนตัวหนังสือตอนปริ้นท์ให้เป็นสีดำ */
             .text-white, .text-slate-300, .text-slate-400 { color: #333 !important; }
             .bg-\[\#0F172A\] { background: white !important; border: 1px solid #ddd !important; box-shadow: none !important; }
-            .gradient-text { background: none; color: #0F172A; -webkit-text-fill-color: #0F172A; }
-            
-            /* จัด Layout รูปภาพและเงาใหม่สำหรับหน้ากระดาษ */
             img { max-width: 100% !important; border: 1px solid #eee; border-radius: 8px !important; box-shadow: none !important; }
             .shadow-xl, .shadow-2xl, .shadow-sm { box-shadow: none !important; }
+            .print-expand { max-height: none !important; overflow: visible !important; }
         }
     </style>
 </head>
 
-<body class="antialiased">
+<body class="antialiased selection:bg-blue-600 selection:text-white">
 
 <!-- ========================================================= -->
-<!-- NAVIGATION (ซ่อนตอนพิมพ์) -->
+<!-- NAVIGATION -->
 <!-- ========================================================= -->
-
 <nav class="sticky top-0 z-50 glass-nav border-b border-slate-200/70 no-print">
     <div class="max-w-7xl mx-auto px-5 lg:px-6">
         <div class="h-[72px] flex items-center justify-between">
-            <a href="#overview" class="flex items-center gap-2 font-bold tracking-wide">
+            <a href="#overview" class="flex items-center gap-2 font-bold tracking-wide text-[#0F172A]">
                 <span class="w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse"></span>
                 <span>Panich.T</span>
-                <span class="hidden sm:inline text-xs text-slate-400 font-normal">| Business Systems</span>
+                <span class="hidden sm:inline text-xs text-slate-400 font-normal">| Business Systems Analyst</span>
             </a>
 
             <!-- Desktop Links -->
             <div class="hidden md:flex items-center gap-7 text-sm font-medium text-slate-600">
                 <a href="#overview" class="hover:text-blue-600 transition">Overview</a>
-                
-                <!-- Projects Dropdown Anchor -->
                 <div class="relative group">
                     <a href="#projects" class="hover:text-blue-600 transition font-bold flex items-center gap-1">
                         Projects <i class="fa-solid fa-chevron-down text-[10px] text-slate-400"></i>
@@ -200,11 +115,10 @@
                         <a href="#tms" class="block px-4 py-2 text-xs hover:bg-slate-50 font-bold text-slate-800">03 — TERN Logistic TMS</a>
                     </div>
                 </div>
-
-                <a href="#how-i-work" class="hover:text-blue-600 transition">How I Work</a>
+                <a href="#how-i-work" class="hover:text-blue-600 transition">How I Work & Matrix</a>
                 <a href="#techstack" class="hover:text-blue-600 transition">Technology</a>
                 <button onclick="window.print()" class="bg-[#0F172A] text-white px-5 py-2.5 rounded-full hover:bg-blue-600 transition shadow-sm text-xs font-bold flex items-center gap-1.5 cursor-pointer">
-                    <i class="fa-solid fa-file-pdf"></i> Save as PDF
+                    <i class="fa-solid fa-file-pdf"></i> Save PDF
                 </button>
             </div>
 
@@ -220,30 +134,28 @@
                 <a href="#rizenic" class="px-3 py-2.5 rounded-lg hover:bg-slate-50 font-bold text-blue-600">01 — RIZENIC ERP</a>
                 <a href="#xpel" class="px-3 py-2.5 rounded-lg hover:bg-slate-50 font-bold text-slate-800">02 — XPEL Platform</a>
                 <a href="#tms" class="px-3 py-2.5 rounded-lg hover:bg-slate-50 font-bold text-slate-800">03 — TERN Logistic TMS</a>
-                <a href="#how-i-work" class="px-3 py-2.5 rounded-lg hover:bg-slate-50">How I Work</a>
+                <a href="#how-i-work" class="px-3 py-2.5 rounded-lg hover:bg-slate-50">How I Work & Matrix</a>
                 <a href="#techstack" class="px-3 py-2.5 rounded-lg hover:bg-slate-50">Technology</a>
                 <button onclick="window.print()" class="w-full text-left px-3 py-3 rounded-xl bg-[#0F172A] text-white mt-2 font-bold flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-file-pdf"></i> Save as PDF
+                    <i class="fa-solid fa-file-pdf"></i> Save PDF
                 </button>
             </div>
         </div>
     </div>
 </nav>
 
-
 <!-- ========================================================= -->
 <!-- HERO HEADER -->
 <!-- ========================================================= -->
-
 <header id="overview" class="relative overflow-hidden bg-white">
-    <div class="absolute -top-32 -right-32 w-[450px] h-[450px] bg-blue-100/50 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute -bottom-40 -left-40 w-[450px] h-[450px] bg-indigo-100/40 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -top-32 -right-32 w-[450px] h-[450px] bg-blue-100/50 rounded-full blur-3xl pointer-events-none no-print"></div>
+    <div class="absolute -bottom-40 -left-40 w-[450px] h-[450px] bg-indigo-100/40 rounded-full blur-3xl pointer-events-none no-print"></div>
 
     <div class="max-w-7xl mx-auto px-5 lg:px-6 pt-16 pb-20 relative z-10">
         <div class="max-w-5xl mx-auto text-center">
             <!-- Profile Image -->
             <div class="relative w-32 h-32 mx-auto mb-6">
-                <div class="absolute inset-0 bg-blue-500/15 rounded-full blur-xl scale-110"></div>
+                <div class="absolute inset-0 bg-blue-500/15 rounded-full blur-xl scale-110 no-print"></div>
                 <img src="S__41730082.jpg" alt="Panich Thimayom" width="128" height="128" class="relative w-full h-full object-cover rounded-full border-4 border-white shadow-xl" onerror="this.src='https://placehold.co/400x400/0F172A/FFFFFF?text=PT'">
             </div>
 
@@ -252,7 +164,7 @@
                 BUSINESS SYSTEMS ANALYST
             </div>
 
-            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-3">PANICH TIMAYOM</h1>
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-3 text-[#0F172A]">PANICH TIMAYOM</h1>
 
             <p class="text-base md:text-lg text-slate-500 font-medium mb-6">
                 Business Analyst <span class="mx-2 text-slate-300">•</span>
@@ -261,7 +173,7 @@
             </p>
 
             <p class="text-xl md:text-3xl font-medium text-slate-800 max-w-3xl mx-auto leading-relaxed mb-8">
-                “I turn business problems into <span class="gradient-text font-bold">practical digital systems.</span>”
+                “I turn business problems into <span class="font-bold text-blue-600">practical digital systems.</span>”
             </p>
 
             <!-- 5 Pillars -->
@@ -273,9 +185,9 @@
                 <span class="bg-white border border-slate-200 shadow-sm px-4 py-2 rounded-xl text-xs sm:text-sm flex items-center gap-2"><i class="fa-solid fa-database text-purple-500"></i> Data & BI</span>
             </div>
 
-            <!-- Download PDF Button (Hero) -->
-            <div class="flex justify-center items-center gap-4 no-print">
-                <button onclick="window.print()" class="inline-flex items-center gap-2 bg-[#0F172A] hover:bg-blue-600 text-white px-8 py-3.5 rounded-full transition font-bold text-sm shadow-xl shadow-slate-900/20 cursor-pointer">
+            <!-- CTA Buttons -->
+            <div class="flex flex-wrap justify-center items-center gap-4 no-print">
+                <button onclick="window.print()" class="inline-flex items-center gap-2 bg-[#0F172A] hover:bg-blue-600 text-white px-8 py-3.5 rounded-full transition font-bold text-sm shadow-lg shadow-blue-500/25 cursor-pointer">
                     <i class="fa-solid fa-file-pdf text-base"></i> Save as PDF / Print Resume
                 </button>
             </div>
@@ -283,25 +195,22 @@
     </div>
 </header>
 
-
 <!-- ========================================================= -->
 <!-- PROJECT SECTION BAR -->
 <!-- ========================================================= -->
-
 <div id="projects" class="bg-[#0F172A] text-white py-5 text-center sticky top-[72px] z-40 no-print">
     <div class="text-xs font-bold tracking-[.25em] uppercase">Selected Case Studies</div>
-    <div class="text-[11px] text-slate-400 mt-0.5 font-light">Business Analysis • System Design • Digital Transformation</div>
+    <div class="text-[11px] text-slate-400 mt-0.5 font-light">Business Analysis • System Design • Data Modeling</div>
 </div>
 
-
 <!-- ========================================================= -->
-<!-- 01 RIZENIC ERP -->
+<!-- 01 RIZENIC ERP + DEEP DIVE (BRD & ERD) -->
 <!-- ========================================================= -->
-
 <section id="rizenic" class="bg-white border-b border-slate-200 py-20 relative overflow-hidden">
     <div class="project-number no-print">01</div>
     <div class="max-w-7xl mx-auto px-5 lg:px-6 relative z-10">
 
+        <!-- Header -->
         <div class="max-w-4xl mx-auto text-center mb-10">
             <div class="flex items-center justify-center gap-2 mb-3">
                 <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-emerald-200">
@@ -310,247 +219,669 @@
             </div>
             <div class="text-xs font-bold text-blue-600 tracking-[.2em] uppercase mb-2">01 — DIGITAL TRANSFORMATION</div>
             <h2 class="text-3xl md:text-5xl font-extrabold text-[#0F172A] mb-4">RIZENIC ERP & Operations Platform</h2>
-            <p class="text-slate-500 font-light max-w-2xl mx-auto">End-to-end operational transformation from fragmented manual processes to a centralized digital platform.</p>
+            <p class="text-slate-500 font-light max-w-2xl mx-auto text-base">
+                เปลี่ยนองค์กรจากการใช้กระดาษและข้อมูลที่กระจัดกระจาย (Data Silos) สู่ระบบ Centralized Web Application ที่เชื่อมโยงการทำงานระหว่างทีม SA, คลังอะไหล่, ช่างทำสี และบัญชี เข้าด้วยกันแบบ 100%
+            </p>
         </div>
 
         <!-- Role Banner -->
-        <div class="bg-slate-50 border border-slate-200 rounded-3xl p-7 md:p-8 max-w-5xl mx-auto mb-12 shadow-sm">
+        <div class="bg-slate-50 border border-slate-200 rounded-3xl p-7 md:p-8 max-w-5xl mx-auto mb-16 shadow-sm">
             <div class="flex items-center gap-2 mb-5 border-b border-slate-200 pb-3">
                 <i class="fa-solid fa-user-gear text-blue-600"></i>
-                <h3 class="text-xs font-bold uppercase tracking-widest text-[#0F172A]">My Role</h3>
+                <h3 class="text-xs font-bold uppercase tracking-widest text-[#0F172A]">My Role & Impact</h3>
             </div>
-            <div class="grid md:grid-cols-3 gap-6">
+            <div class="grid md:grid-cols-4 gap-6">
                 <div>
                     <h4 class="text-xs font-bold uppercase tracking-wider mb-1 text-slate-800">Business Analysis</h4>
-                    <p class="text-xs text-slate-600 font-light">Requirement Gathering • Process Analysis • Business Rules Mapping</p>
+                    <p class="text-xs text-slate-600 font-light">รวบรวม Requirement จากคนหน้างาน ออกแบบกระบวนการทำงานใหม่ (To-Be Workflow)</p>
                 </div>
                 <div>
-                    <h4 class="text-xs font-bold uppercase tracking-wider mb-1 text-slate-800">System Design</h4>
-                    <p class="text-xs text-slate-600 font-light">Workflow Optimization • Data Modeling • System Architecture</p>
+                    <h4 class="text-xs font-bold uppercase tracking-wider mb-1 text-slate-800">Data Modeling</h4>
+                    <p class="text-xs text-slate-600 font-light">ออกแบบ Entity Relationship Diagram (ERD) ลดการคีย์ซ้ำ</p>
                 </div>
                 <div>
                     <h4 class="text-xs font-bold uppercase tracking-wider mb-1 text-slate-800">Implementation</h4>
-                    <p class="text-xs text-slate-600 font-light">Web App Development • Database • Automation • BI Dashboards</p>
+                    <p class="text-xs text-slate-600 font-light">พัฒนา Web App ด้วย Node.js + PostgreSQL + Tailwind</p>
+                </div>
+                <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200">
+                    <h4 class="text-xs font-bold uppercase tracking-wider mb-1 text-emerald-800">Key Result</h4>
+                    <p class="text-xs text-emerald-700 font-bold">ประมวลผลกว่า 30,000+ Transactions และลดงานคีย์ Excel ลงได้ 90%</p>
                 </div>
             </div>
         </div>
+<!-- ========================================================= -->
+<!-- 01 RIZENIC ERP + DEEP DIVE (BRD & ERD) -->
+<!-- ========================================================= -->
+<section id="rizenic" class="bg-white border-b border-slate-200 py-20 relative overflow-hidden">
+    <div class="project-number no-print">01</div>
+    <div class="max-w-7xl mx-auto px-5 lg:px-6 relative z-10">
 
-        <!-- Problem / Analysis / Solution / Impact -->
-        <div class="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto mb-16">
-            <div class="space-y-6">
-                <div class="soft-card bg-white border border-slate-200 p-6 rounded-2xl">
-                    <h3 class="text-xs font-bold text-rose-600 uppercase tracking-widest mb-3 flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation"></i> Business Problem</h3>
-                    <p class="text-sm text-slate-600 font-light leading-relaxed">
-                        ศูนย์บริการมีขั้นตอนการรับรถและสั่งซื้ออะไหล่ที่ซับซ้อน ข้อมูลกระจัดกระจายอยู่ในกระดาษและ Excel ทำให้เกิดปัญหา Data Silos ฝ่ายบริหารไม่สามารถเห็นภาพรวมของงาน (WIP) และต้นทุนได้แบบ Real-time นำไปสู่ปัญหาความล่าช้าและการรับงานเกินความจุอู่
-                    </p>
-                </div>
-
-                <div class="soft-card bg-white border border-slate-200 p-6 rounded-2xl">
-                    <h3 class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass-chart"></i> My Analysis</h3>
-                    <p class="text-sm text-slate-600 font-light leading-relaxed">
-                        ลงพื้นที่ศึกษากระบวนการตั้งแต่ Service Advisor (SA) ➔ ช่าง ➔ อะไหล่ ➔ บัญชี พบว่าคอขวดเกิดจากการคีย์ข้อมูลซ้ำซ้อน จึงออกแบบ <strong>To-Be Workflow</strong> โดยใช้ Job ID เป็นแกนกลางในการเชื่อมโยงข้อมูลข้ามแผนก
-                    </p>
-                </div>
-
-                <div class="bg-blue-50/60 border border-blue-100 p-6 rounded-2xl">
-                    <h3 class="text-xs font-bold text-[#0F172A] uppercase tracking-widest mb-3 flex items-center gap-2"><i class="fa-solid fa-lightbulb text-amber-500"></i> Solution Architecture</h3>
-                    <ul class="text-sm text-slate-600 space-y-2.5 font-light list-disc pl-5">
-                        <li><strong class="text-slate-800">Centralized Database:</strong> ออกแบบ Data Schema ใหม่เพื่อลดความซ้ำซ้อน</li>
-                        <li><strong class="text-slate-800">Role-Based Web Application:</strong> แยก UI และสิทธิ์ตามบทบาทผู้ใช้งาน</li>
-                        <li><strong class="text-slate-800">Automated Quota Engine:</strong> คำนวณ Capacity และโควต้าทำสีรายวันอัตโนมัติ</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="space-y-6">
-                <!-- BUSINESS IMPACT -->
-                <div class="bg-[#0F172A] p-7 rounded-3xl shadow-xl text-white">
-                    <h3 class="text-xs font-bold text-emerald-400 uppercase tracking-widest text-center mb-6">Business Impact</h3>
-                    <div class="grid grid-cols-2 gap-6">
-                        <div class="text-center">
-                            <div class="text-3xl font-extrabold text-blue-400 mb-1">30,000+</div>
-                            <div class="text-[10px] text-slate-400 font-medium uppercase tracking-wide">Operational Records</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-3xl font-extrabold text-indigo-400 mb-1">20+</div>
-                            <div class="text-[10px] text-slate-400 font-medium uppercase tracking-wide">Process Steps</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-3xl font-extrabold text-emerald-400 mb-1">10</div>
-                            <div class="text-[10px] text-slate-400 font-medium uppercase tracking-wide">Operational Stations</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-xl font-extrabold text-amber-400 mb-1 leading-tight">Significant</div>
-                            <div class="text-[10px] text-slate-400 font-medium uppercase tracking-wide">Reduction in Manual Data Entry</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Transformation Roadmap -->
-                <div class="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm">
-                    <h3 class="text-xs font-bold uppercase tracking-widest mb-5 flex items-center gap-2"><i class="fa-solid fa-road text-blue-500"></i> Transformation Roadmap</h3>
-                    <div class="relative space-y-6 pl-2">
-                        <div class="flex gap-4 items-start">
-                            <div class="timeline-dot border-slate-300 mt-1"></div>
-                            <div>
-                                <div class="text-[10px] font-bold text-slate-500 uppercase">Phase 1 — Validation (MVP)</div>
-                                <div class="font-bold text-sm text-slate-800">AppSheet + Looker Studio</div>
-                                <div class="text-xs text-slate-500 font-light">Proof of concept & immediate operations tracking</div>
-                            </div>
-                        </div>
-                        <div class="flex gap-4 items-start">
-                            <div class="timeline-dot mt-1"></div>
-                            <div>
-                                <div class="text-[10px] font-bold text-blue-600 uppercase">Phase 2 — Custom Enterprise (Current)</div>
-                                <div class="font-bold text-sm text-blue-900">Custom Web Application + PostgreSQL</div>
-                                <div class="text-xs text-slate-500 font-light">Scalable, multi-branch operational platform</div>
-                            </div>
-                        </div>
-                        <div class="flex gap-4 items-start">
-                            <div class="timeline-dot border-slate-300 mt-1"></div>
-                            <div>
-                                <div class="text-[10px] font-bold text-slate-400 uppercase">Phase 3 — Roadmap</div>
-                                <div class="font-bold text-sm text-slate-600">Legacy Integration & Optimization</div>
-                                <div class="text-xs text-slate-500 font-light">E-Claim XML Automation Pipeline</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- UI Gallery (Phase 2) -->
-        <div class="max-w-6xl mx-auto mb-16 page-break-inside">
-            <div class="text-center mb-8">
-                <span class="bg-blue-50 text-blue-700 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-blue-200 mb-2 inline-block">Phase 2 Systems</span>
-                <h3 class="text-2xl font-bold mb-2">Enterprise Application UI</h3>
-                <p class="text-sm text-slate-500 font-light">User-centric interface designed around real operational workflows.</p>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="soft-card bg-slate-50 p-4 rounded-3xl border border-slate-200">
-                    <div class="flex justify-between items-center mb-3 px-2">
-                        <h4 class="font-bold text-sm">SA Operations Board</h4>
-                        <span class="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded font-bold uppercase">WORKFLOW</span>
-                    </div>
-                    <img src="service2.jpg" alt="SA Operations Board" loading="lazy" class="w-full rounded-2xl border border-slate-200" onerror="this.src='https://placehold.co/800x500/F1F5F9/0F172A?text=SA+Dashboard'">
-                </div>
-
-                <div class="soft-card bg-slate-50 p-4 rounded-3xl border border-slate-200">
-                    <div class="flex justify-between items-center mb-3 px-2">
-                        <h4 class="font-bold text-sm">Repair Station Tracking</h4>
-                        <span class="text-[10px] bg-orange-100 text-orange-700 px-2 py-0.5 rounded font-bold uppercase">TRACKING</span>
-                    </div>
-                    <img src="re1.jpg" alt="Repair Station Tracking" loading="lazy" class="w-full rounded-2xl border border-slate-200" onerror="this.src='https://placehold.co/800x500/F1F5F9/0F172A?text=Repair+Tracking'">
-                </div>
-
-                <div class="soft-card bg-slate-50 p-4 rounded-3xl border border-slate-200">
-                    <div class="flex justify-between items-center mb-3 px-2">
-                        <h4 class="font-bold text-sm">Finance & Billing Center</h4>
-                        <span class="text-[10px] bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded font-bold uppercase">ACCOUNTING</span>
-                    </div>
-                    <img src="a1.jpg" alt="Finance and Billing Center" loading="lazy" class="w-full rounded-2xl border border-slate-200" onerror="this.src='https://placehold.co/800x500/F1F5F9/0F172A?text=Finance'">
-                </div>
-
-                <div class="soft-card bg-slate-50 p-4 rounded-3xl border border-slate-200">
-                    <div class="flex justify-between items-center mb-3 px-2">
-                        <h4 class="font-bold text-sm">Security & Admin Panel</h4>
-                        <span class="text-[10px] bg-slate-200 text-slate-700 px-2 py-0.5 rounded font-bold uppercase">ADMIN</span>
-                    </div>
-                    <img src="admin.jpg" alt="Security and Admin Panel" loading="lazy" class="w-full rounded-2xl border border-slate-200" onerror="this.src='https://placehold.co/800x500/F1F5F9/0F172A?text=Admin'">
-                </div>
-            </div>
-        </div>
-
-        <!-- BI Dashboards -->
-        <div class="max-w-6xl mx-auto mb-16 page-break-inside">
-            <div class="text-center mb-8">
-                <h3 class="text-2xl font-bold mb-2">Data & Business Intelligence</h3>
-                <p class="text-sm text-slate-500 font-light">Operational dashboards for workload, lead time and executive visibility.</p>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="bg-[#0F172A] p-2 rounded-3xl shadow-xl">
-                    <img src="ds1.jpg" alt="Management Dashboard 1" loading="lazy" class="w-full rounded-2xl border border-slate-800" onerror="this.src='https://placehold.co/800x500/1E293B/FFFFFF?text=Dashboard+1'">
-                </div>
-
-                <div class="bg-[#0F172A] p-2 rounded-3xl shadow-xl">
-                    <img src="ds2.jpg" alt="Management Dashboard 2" loading="lazy" class="w-full rounded-2xl border border-slate-800" onerror="this.src='https://placehold.co/800x500/1E293B/FFFFFF?text=Dashboard+2'">
-                </div>
-            </div>
-        </div>
-
-        <!-- Legacy Integration (In Development) -->
-        <div class="max-w-5xl mx-auto pt-10 border-t border-slate-200 mb-16">
-            <div class="text-center mb-8">
-                <span class="inline-block bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-3 border border-amber-200">
-                    <i class="fa-solid fa-person-digging mr-1"></i> Currently in Development
+        <!-- Header -->
+        <div class="max-w-4xl mx-auto text-center mb-10">
+            <div class="flex items-center justify-center gap-2 mb-3">
+                <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-emerald-200">
+                    <i class="fa-solid fa-circle-check text-emerald-600 mr-1"></i> Implemented / Live System
                 </span>
-                <h3 class="text-2xl font-bold mb-3">Legacy System Integration & Automation</h3>
-                <p class="text-sm text-slate-600 font-light leading-relaxed max-w-3xl mx-auto">
-                    วิเคราะห์ข้อจำกัดของระบบบัญชีเดิม (Express) ที่เป็นระบบปิดและไม่รองรับ API จึงออกแบบ Data Pipeline สำหรับ Extract ➔ Transform ➔ Load เพื่อเตรียมข้อมูลเข้าสู่ E-Claim ในรูปแบบ XML อัตโนมัติ
+            </div>
+            <div class="text-xs font-bold text-blue-600 tracking-[.2em] uppercase mb-2">01 — DIGITAL TRANSFORMATION</div>
+            <h2 class="text-3xl md:text-5xl font-extrabold text-[#0F172A] mb-4">RIZENIC ERP & Operations Platform</h2>
+            <p class="text-slate-500 font-light max-w-2xl mx-auto text-base">
+                เปลี่ยนองค์กรจากการใช้กระดาษและข้อมูลที่กระจัดกระจาย (Data Silos) สู่ระบบ Centralized Web Application ที่เชื่อมโยงการทำงานระหว่างทีม SA, คลังอะไหล่, ช่างทำสี และบัญชี เข้าด้วยกันแบบ 100%
+            </p>
+        </div>
+
+        <!-- Role Banner -->
+        <div class="bg-slate-50 border border-slate-200 rounded-3xl p-7 md:p-8 max-w-5xl mx-auto mb-16 shadow-sm">
+            <div class="flex items-center gap-2 mb-5 border-b border-slate-200 pb-3">
+                <i class="fa-solid fa-user-gear text-blue-600"></i>
+                <h3 class="text-xs font-bold uppercase tracking-widest text-[#0F172A]">My Role & Impact</h3>
+            </div>
+            <div class="grid md:grid-cols-4 gap-6">
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider mb-1 text-slate-800">Business Analysis</h4>
+                    <p class="text-xs text-slate-600 font-light">รวบรวม Requirement จากคนหน้างาน ออกแบบกระบวนการทำงานใหม่ (To-Be Workflow)</p>
+                </div>
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider mb-1 text-slate-800">Data Modeling</h4>
+                    <p class="text-xs text-slate-600 font-light">ออกแบบ Entity Relationship Diagram (ERD) ลดการคีย์ซ้ำ</p>
+                </div>
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider mb-1 text-slate-800">Implementation</h4>
+                    <p class="text-xs text-slate-600 font-light">พัฒนา Web App ด้วย Node.js + PostgreSQL + Tailwind</p>
+                </div>
+                <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200">
+                    <h4 class="text-xs font-bold uppercase tracking-wider mb-1 text-emerald-800">Key Result</h4>
+                    <p class="text-xs text-emerald-700 font-bold">ประมวลผลกว่า 30,000+ Transactions และลดงานคีย์ Excel ลงได้ 90%</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- RIZENIC DEEP DIVE: BRD (Problem vs Solution)   -->
+        <!-- ============================================== -->
+        <div class="max-w-6xl mx-auto mt-16">
+            <div class="text-center mb-10 avoid-break">
+                <span class="text-xs font-bold text-amber-500 tracking-[.2em] uppercase mb-3">Professional Documentation</span>
+                <h2 class="text-3xl font-extrabold text-[#0F172A] mb-4">Systems Analysis & Design</h2>
+                <p class="text-slate-500 font-light text-sm max-w-3xl mx-auto">
+                    เจาะลึกกระบวนการทำงานในฐานะ Business Systems Analyst ตั้งแต่การวิเคราะห์ปัญหาหน้างาน (Pain Points) การออกแบบโซลูชั่นด้วยระบบจริง (UI) และการวางโครงสร้างฐานข้อมูล (Data Architecture)
                 </p>
             </div>
 
-            <div class="bg-slate-900 rounded-3xl p-7 md:p-10 shadow-2xl">
-                <div class="grid md:grid-cols-3 gap-6 items-center text-center">
+            
+
+                <!-- 1. BRD & PROCESS (PROBLEM vs SOLUTION with UI Images) -->
+            <div class="bg-white border border-slate-200 p-6 md:p-10 rounded-3xl shadow-sm mb-12 avoid-break">
+                <div class="flex flex-col md:flex-row justify-between md:items-end gap-4 mb-8 border-b border-slate-100 pb-5">
                     <div>
-                        <div class="w-16 h-16 mx-auto mb-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-2xl">
-                            <i class="fa-solid fa-file-excel"></i>
+                        <div class="inline-flex items-center gap-2 text-amber-500 mb-2">
+                            <i class="fa-solid fa-file-signature text-2xl"></i>
+                            <span class="text-xs font-bold tracking-widest uppercase">Business Requirement Document (BRD)</span>
                         </div>
-                        <div class="text-white font-bold text-sm">Express Legacy</div>
-                        <div class="text-[10px] text-slate-400">Raw Data Extract</div>
+                        <h3 class="font-extrabold text-[#0F172A] text-2xl md:text-3xl">1. Pain Points Resolution</h3>
+                        <p class="text-sm text-slate-500 font-light mt-1">เปรียบเทียบปัญหาเดิมที่พบหน้างาน (AS-IS) กับวิธีการแก้ไขด้วย Digital Platform (TO-BE)</p>
+                    </div>
+                </div>
+
+                <div class="space-y-16">
+                    
+                    <!-- 1: รับรถและประเมินงานซ่อม (Front-Desk) -->
+                    <div class="grid lg:grid-cols-12 gap-8 items-center border-b border-slate-100 pb-12">
+                        <div class="lg:col-span-5 space-y-5">
+                            <div class="bg-rose-50 border-l-4 border-rose-500 p-5 rounded-r-2xl shadow-sm">
+                                <h4 class="text-sm font-bold text-rose-700 mb-2"><i class="fa-solid fa-triangle-exclamation"></i> ปัญหาเดิม (AS-IS)</h4>
+                                <p class="text-xs text-rose-900/80 font-medium leading-relaxed">
+                                    <strong>SA รับรถจดกระดาษ:</strong> ต้องจดข้อมูลลูกค้าและรถยนต์ลงกระดาษ ลุกเดินส่งเอกสารข้ามแผนก ทำให้ข้อมูลสูญหายและประเมินราคาซ้ำซ้อน
+                                </p>
+                            </div>
+                            <div class="bg-emerald-50 border-l-4 border-emerald-500 p-5 rounded-r-2xl shadow-sm">
+                                <h4 class="text-sm font-bold text-emerald-700 mb-2"><i class="fa-solid fa-check-double"></i> การแก้ปัญหา (TO-BE)</h4>
+                                <p class="text-xs text-emerald-900/80 font-light leading-relaxed mb-3">
+                                    <strong>Digital Intake & Auto-Calculation:</strong> <br>SA สร้าง Job ลงในระบบ Centralized Database (Single Source of Truth) สามารถระบุชิ้นส่วนที่ต้องทำสี (Main/Sub Parts) พร้อมคำนวณระดับความเสียหาย (Damage Level) อัตโนมัติ ลดงานเอกสาร 100%
+                                </p>
+                                <div class="flex gap-2">
+                                    <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-1 rounded">Paperless</span>
+                                    <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-1 rounded">Auto Compute</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-7 relative group">
+                            <div class="grid grid-cols-1 gap-4 relative z-10">
+                                <img src="order1.jpg" alt="Service Advisor Portal" loading="lazy" class="w-full rounded-xl shadow-md border border-slate-200 group-hover:-translate-y-1 transition-transform duration-300" onerror="this.src='https://placehold.co/800x450/F1F5F9/0F172A?text=Order+Screen'">
+                                <img src="order2.jpg" alt="Damage Assessment" loading="lazy" class="w-full rounded-xl shadow-md border border-slate-200 group-hover:-translate-y-1 transition-transform duration-300" onerror="this.src='https://placehold.co/800x450/F1F5F9/0F172A?text=Damage+Screen'">
+                            </div>
+                            <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-blue-100 rounded-full blur-3xl opacity-50 -z-10"></div>
+                        </div>
                     </div>
 
-                    <div>
-                        <div class="text-blue-400 text-2xl mb-3"><i class="fa-solid fa-arrow-right"></i></div>
-                        <div class="w-20 h-20 mx-auto rounded-2xl bg-blue-600 flex items-center justify-center text-white text-3xl shadow-lg">
-                            <i class="fa-solid fa-laptop-code"></i>
+                    <!-- 2: ระบบจัดการอะไหล่ (Parts Pipeline) -->
+                    <div class="grid lg:grid-cols-12 gap-8 items-center border-b border-slate-100 pb-12">
+                        <div class="lg:col-span-7 relative order-last lg:order-first group">
+                            <div class="absolute -left-6 -top-6 w-32 h-32 bg-amber-100 rounded-full blur-3xl opacity-50 -z-10"></div>
+                            <div class="grid grid-cols-1 gap-4 relative z-10">
+                                <img src="brodpart.jpg" alt="Parts Dashboard" loading="lazy" class="w-full rounded-xl shadow-md border border-slate-200 group-hover:-translate-y-1 transition-transform duration-300" onerror="this.src='https://placehold.co/800x300/F1F5F9/0F172A?text=Parts+Dashboard'">
+                                <img src="order3.jpg" alt="PO Tracking" loading="lazy" class="w-full rounded-xl shadow-md border border-slate-200 group-hover:-translate-y-1 transition-transform duration-300" onerror="this.src='https://placehold.co/800x300/F1F5F9/0F172A?text=PO+Tracking'">
+                            </div>
                         </div>
-                        <div class="text-white font-bold text-sm mt-3">RIZENIC Application</div>
-                        <div class="text-[10px] text-blue-300 bg-blue-900/50 px-2 py-0.5 rounded mt-1 inline-block border border-blue-500/30">Data Schema Mapping</div>
+                        <div class="lg:col-span-5 space-y-5">
+                            <div class="bg-rose-50 border-l-4 border-rose-500 p-5 rounded-r-2xl shadow-sm">
+                                <h4 class="text-sm font-bold text-rose-700 mb-2"><i class="fa-solid fa-triangle-exclamation"></i> ปัญหาเดิม (AS-IS)</h4>
+                                <p class="text-xs text-rose-900/80 font-medium leading-relaxed">
+                                    <strong>คอขวดการเช็คอะไหล่:</strong> SA และช่างต้องโทรถามหรือทัก LINE ถามคลังอะไหล่ว่า "ของมากี่โมง", "ของครบไหม" ทำให้เกิดการสื่อสารตกหล่นและเสียเวลาทำงาน
+                                </p>
+                            </div>
+                            <div class="bg-emerald-50 border-l-4 border-emerald-500 p-5 rounded-r-2xl shadow-sm">
+                                <h4 class="text-sm font-bold text-emerald-700 mb-2"><i class="fa-solid fa-check-double"></i> การแก้ปัญหา (TO-BE)</h4>
+                                <p class="text-xs text-emerald-900/80 font-light leading-relaxed mb-3">
+                                    <strong>PO Tracking Dashboard:</strong> <br>เชื่อมโยงข้อมูลอะไหล่จากคลังสู่ SA และช่างแบบ Real-time แสดงสถานะชัดเจน (รอสั่งซื้อ / ติด Back Order / อะไหล่มาครบแล้ว) พร้อมแจ้งเตือน ETA วันที่ของเข้า
+                                </p>
+                                <div class="flex gap-2">
+                                    <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-1 rounded">Real-time Sync</span>
+                                    <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-1 rounded">No Bottleneck</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div>
-                        <div class="w-16 h-16 mx-auto mb-3 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 text-2xl">
-                            <i class="fa-solid fa-file-code"></i>
+                    <!-- 3: สถานะงานช่างและนัดหมาย (Operations & WIP) -->
+                    <div class="grid lg:grid-cols-12 gap-8 items-center border-b border-slate-100 pb-12">
+                        <div class="lg:col-span-5 space-y-5">
+                            <div class="bg-rose-50 border-l-4 border-rose-500 p-5 rounded-r-2xl shadow-sm">
+                                <h4 class="text-sm font-bold text-rose-700 mb-2"><i class="fa-solid fa-triangle-exclamation"></i> ปัญหาเดิม (AS-IS)</h4>
+                                <p class="text-xs text-rose-900/80 font-medium leading-relaxed">
+                                    <strong>Visibility Blindspot:</strong> แผนกช่างมองไม่เห็นภาพรวมงาน ไม่รู้ว่ารถไปกองอยู่สถานีไหน หัวหน้าช่างจ่ายงานไม่ถูก ทำให้เกิด Unbalanced Workload (บางแผนกงานล้น)
+                                </p>
+                            </div>
+                            <div class="bg-emerald-50 border-l-4 border-emerald-500 p-5 rounded-r-2xl shadow-sm">
+                                <h4 class="text-sm font-bold text-emerald-700 mb-2"><i class="fa-solid fa-check-double"></i> การแก้ปัญหา (TO-BE)</h4>
+                                <p class="text-xs text-emerald-900/80 font-light leading-relaxed mb-3">
+                                    <strong>12-Station Digital Workflow & Routing:</strong> <br>สร้าง Digital Kanban Board ติดตามรถในอู่แบบละเอียดยิบ (ตั้งแต่ เคาะ, โป๊ว, พ่นสี จนถึง รอส่งมอบ) ทำให้เห็นคอขวดหน้างานทันทีและกระจายงานได้ง่ายขึ้น <br><br>
+                                    <strong>ปฏิทินปฏิบัติงานช่าง (Progress Bars):</strong> <br>ระบบแสดงเป้าซ่อมเสร็จรายวัน พร้อม "หลอดพลัง (Progress Bar)" ให้ช่างรู้ทันทีว่าเป้าหมายวันนี้เสร็จไปกี่คันแล้ว (เช่น เสร็จ 10/11 คัน) เพื่อป้องกันงานหลุด SLA
+                                </p>
+                                <div class="flex gap-2">
+                                    <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-1 rounded">WIP Visibility</span>
+                                    <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-1 rounded">Smart Routing</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="text-white font-bold text-sm">E-Claim System</div>
-                        <div class="text-[10px] text-slate-400">XML Automated Load</div>
+                        <div class="lg:col-span-7 relative group">
+                            <div class="grid grid-cols-1 gap-4 relative z-10">
+                                <img src="re2.jpg" alt="Tech Calendar Progress" loading="lazy" class="w-full rounded-xl shadow-md border border-slate-200 group-hover:-translate-y-1 transition-transform duration-300" onerror="this.src='https://placehold.co/800x450/F1F5F9/0F172A?text=Tech+Calendar'">
+                                <img src="re1.jpg" alt="Station Tracking" loading="lazy" class="w-full rounded-xl shadow-md border border-slate-200 group-hover:-translate-y-1 transition-transform duration-300" onerror="this.src='https://placehold.co/800x450/F1F5F9/0F172A?text=Station+Tracking'">
+                            </div>
+                            <div class="absolute -right-6 -top-6 w-32 h-32 bg-purple-100 rounded-full blur-3xl opacity-50 -z-10"></div>
+                        </div>
+                    </div>
+
+                    <!-- 4: การจัดคิวนัดหมาย (Scheduling & Quota) -->
+                    <div class="grid lg:grid-cols-12 gap-8 items-center border-b border-slate-100 pb-12">
+                        <div class="lg:col-span-7 relative order-last lg:order-first group">
+                            <div class="absolute -left-6 -bottom-6 w-32 h-32 bg-amber-100 rounded-full blur-3xl opacity-50 -z-10"></div>
+                            <div class="grid grid-cols-1 gap-4 relative z-10">
+                                <img src="Brodcaleda.jpg" alt="Calendar Scheduling" loading="lazy" class="w-full rounded-xl shadow-md border border-slate-200 group-hover:-translate-y-1 transition-transform duration-300" onerror="this.src='https://placehold.co/800x450/F1F5F9/0F172A?text=Calendar'">
+                            </div>
+                        </div>
+                        <div class="lg:col-span-5 space-y-5">
+                            <div class="bg-rose-50 border-l-4 border-rose-500 p-5 rounded-r-2xl shadow-sm">
+                                <h4 class="text-sm font-bold text-rose-700 mb-2"><i class="fa-solid fa-triangle-exclamation"></i> ปัญหาเดิม (AS-IS)</h4>
+                                <p class="text-xs text-rose-900/80 font-medium leading-relaxed mb-2">
+                                    <strong>จัดคิวนัดหมายไม่ได้:</strong> ต้องนับคิวงานช่างแบบ Manual วุ่นวายและโกลาหล นำไปสู่ปัญหางานล้นอู่
+                                </p>
+                            </div>
+                            <div class="bg-emerald-50 border-l-4 border-emerald-500 p-5 rounded-r-2xl shadow-sm">
+                                <h4 class="text-sm font-bold text-emerald-700 mb-2"><i class="fa-solid fa-check-double"></i> การแก้ปัญหา (TO-BE)</h4>
+                                <p class="text-xs text-emerald-900/80 font-light leading-relaxed mb-3">
+                                    <strong>Smart Quota Engine:</strong> <br>ปฏิทินปฏิบัติงานทำงานคู่กับระบบโควต้าอัจฉริยะ ล็อคคิวและคำนวณจำนวนชิ้นงานทำสีต่อวันให้อัตโนมัติ ป้องกันการรับรถเกิน Capacity (Overbooking)
+                                </p>
+                                <div class="flex gap-2">
+                                    <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-1 rounded">Resource Planning</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5: บัญชีการเงิน (Finance & Auto-Billing) -->
+                    <div class="grid lg:grid-cols-12 gap-8 items-center border-b border-slate-100 pb-12">
+                        <div class="lg:col-span-5 space-y-5">
+                            <div class="bg-rose-50 border-l-4 border-rose-500 p-5 rounded-r-2xl shadow-sm">
+                                <h4 class="text-sm font-bold text-rose-700 mb-2"><i class="fa-solid fa-triangle-exclamation"></i> ปัญหาเดิม (AS-IS)</h4>
+                                <p class="text-xs text-rose-900/80 font-medium leading-relaxed mb-2">
+                                    <strong>บัญชีคีย์ซ้ำ & วางบิล:</strong> ต้องนำข้อมูลจากหน้างานมาคีย์ลง Excel ใหม่ และไม่สามารถติดตามยอดบิลค้างชำระได้ กระทบการบริหารเงินหมุนเวียน (Cash Flow)
+                                </p>
+                            </div>
+                            <div class="bg-emerald-50 border-l-4 border-emerald-500 p-5 rounded-r-2xl shadow-sm">
+                                <h4 class="text-sm font-bold text-emerald-700 mb-2"><i class="fa-solid fa-check-double"></i> การแก้ปัญหา (TO-BE)</h4>
+                                <p class="text-xs text-emerald-900/80 font-light leading-relaxed mb-3">
+                                    <strong>Auto-Billing System:</strong> <br>ฝ่ายบัญชีดึงข้อมูลต้นทุนและค่าแรงจาก Job มาวางบิลและติดตามยอดหนี้ได้ทันทีโดยไม่ต้องคีย์ข้อมูลซ้ำ พร้อม Dashboard สถานะการเงินแบบ Real-time
+                                </p>
+                                <div class="flex gap-2">
+                                    <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-1 rounded">Cash Flow Control</span>
+                                    <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-1 rounded">No Data Entry</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-7 relative group">
+                            <div class="grid grid-cols-1 gap-4 relative z-10">
+                                <img src="a1.jpg" alt="Finance Dashboard" loading="lazy" class="w-full h-auto aspect-video object-cover object-top rounded-xl shadow-md border border-slate-200 group-hover:-translate-y-1 transition-transform duration-300" onerror="this.src='https://placehold.co/800x450/F1F5F9/0F172A?text=Finance+Dashboard'">
+                            </div>
+                            <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-emerald-100 rounded-full blur-3xl opacity-50 -z-10"></div>
+                        </div>
+                    </div>
+
+                   <!-- 6: SA Performance & Task Prioritization -->
+                    <div class="grid lg:grid-cols-12 gap-8 items-center border-b border-slate-100 pb-12">
+                        <div class="lg:col-span-7 relative order-last lg:order-first group">
+                            <div class="absolute -left-6 -bottom-6 w-32 h-32 bg-blue-100 rounded-full blur-3xl opacity-50 -z-10"></div>
+                            <div class="grid grid-cols-1 gap-4 relative z-10">
+                                <img src="brodSAjob.jpg" alt="SA Summary Dashboard" loading="lazy" class="w-full rounded-xl shadow-md border border-slate-200 group-hover:-translate-y-1 transition-transform duration-300" onerror="this.src='https://placehold.co/800x450/F1F5F9/0F172A?text=SA+Dashboard'">
+                                <img src="Brod1.jpg" alt="SA Teams KPI" loading="lazy" class="w-full rounded-xl shadow-md border border-slate-200 group-hover:-translate-y-1 transition-transform duration-300" onerror="this.src='https://placehold.co/800x450/F1F5F9/0F172A?text=SA+KPI'">
+                            </div>
+                        </div>
+                        <div class="lg:col-span-5 space-y-5">
+                            <div class="bg-rose-50 border-l-4 border-rose-500 p-5 rounded-r-2xl shadow-sm">
+                                <h4 class="text-sm font-bold text-rose-700 mb-2"><i class="fa-solid fa-triangle-exclamation"></i> ปัญหาเดิม (AS-IS)</h4>
+                                <p class="text-xs text-rose-900/80 font-medium leading-relaxed">
+                                    <strong>SA ต้องรวบรวมงานเอง & ขาดภาพรวมคิวงาน:</strong> เสียเวลานั่งนับยอดรถรายเดือน นับผิดนับถูก คำนวณคอมมิชชันล่าช้า และมองไม่เห็นว่างานของตัวเองไปค้างกองอยู่ที่สถานะไหน ทำให้จัดลำดับความสำคัญของงานผิดพลาด
+                                </p>
+                            </div>
+                            <div class="bg-emerald-50 border-l-4 border-emerald-500 p-5 rounded-r-2xl shadow-sm">
+                                <h4 class="text-sm font-bold text-emerald-700 mb-2"><i class="fa-solid fa-check-double"></i> การแก้ปัญหา (TO-BE)</h4>
+                                <p class="text-xs text-emerald-900/80 font-light leading-relaxed mb-3">
+                                    <strong>SA Performance Dashboard:</strong> <br>สรุปยอดงานแยกราย SA (My Portfolio) รู้ทันทีว่ารับรถเข้ามากี่คัน ปิดงานเท่าไหร่ คำนวณคอมมิชชันได้โปร่งใส แม่นยำ <br><br>
+                                    <strong>Smart Task Prioritization:</strong> <br>เห็นภาพรวมชัดเจนว่างานตัวเองกองอยู่ในสถานะไหน (เช่น รออะไหล่, รอประกันอนุมัติ) ช่วยให้ SA รู้ว่าต้องเร่งจัดการก้อนไหนก่อน จัดเรียงลำดับงานได้ถูกต้องแม่นยำ ไม่ตกหล่น
+                                </p>
+                                <div class="flex gap-2">
+                                    <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-1 rounded">KPI Tracking</span>
+                                    <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-1 rounded">Task Prioritization</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 7: Executive Dashboard -->
+                    <div class="grid lg:grid-cols-12 gap-8 items-center pb-4">
+                        <div class="lg:col-span-5 space-y-5">
+                            <div class="bg-rose-50 border-l-4 border-rose-500 p-5 rounded-r-2xl shadow-sm">
+                                <h4 class="text-sm font-bold text-rose-700 mb-2"><i class="fa-solid fa-triangle-exclamation"></i> ปัญหาเดิม (AS-IS)</h4>
+                                <p class="text-xs text-rose-900/80 font-medium leading-relaxed mb-2">
+                                    <strong>ขาดข้อมูลตัดสินใจระดับบริหาร:</strong> ผู้บริหารต้องคอยเดินถามผู้จัดการหรือพนักงานว่างานแต่ละแผนกไปถึงไหนแล้ว มองไม่เห็นภาพรวมขององค์กร
+                                </p>
+                            </div>
+                            <div class="bg-emerald-50 border-l-4 border-emerald-500 p-5 rounded-r-2xl shadow-sm">
+                                <h4 class="text-sm font-bold text-emerald-700 mb-2"><i class="fa-solid fa-check-double"></i> การแก้ปัญหา (TO-BE)</h4>
+                                <p class="text-xs text-emerald-900/80 font-light leading-relaxed mb-3">
+                                    <strong>Real-time Executive Dashboard:</strong> <br>แดชบอร์ดสรุปงานภาพรวมองค์กรครบทุกมิติ ผู้บริหารเปิดดูยอดรถเข้า-ออก, ปริมาณงานรายแผนก, และตัวเลขทางบัญชีได้ทันทีโดยไม่ต้องรอ Report สิ้นเดือน
+                                </p>
+                                <div class="flex gap-2">
+                                    <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-1 rounded">Executive View</span>
+                                    <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-1 rounded">Data-Driven</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-7 relative group">
+                            <div class="grid grid-cols-2 gap-3 relative z-10">
+                                <img src="ds1.jpg" alt="Executive Dashboard 1" loading="lazy" class="w-full rounded-xl shadow-md border border-slate-200 col-span-2 group-hover:-translate-y-1 transition-transform duration-300" onerror="this.src='https://placehold.co/800x450/F1F5F9/0F172A?text=Dashboard+1'">
+                                <img src="ds3.jpg" alt="Executive Dashboard 3" loading="lazy" class="w-full h-full object-cover rounded-xl shadow-md border border-slate-200 group-hover:-translate-y-1 transition-transform duration-300" onerror="this.src='https://placehold.co/800x450/F1F5F9/0F172A?text=Dashboard+3'">
+                                <img src="ds2.jpg" alt="Executive Dashboard 2" loading="lazy" class="w-full h-full object-cover rounded-xl shadow-md border border-slate-200 group-hover:-translate-y-1 transition-transform duration-300" onerror="this.src='https://placehold.co/800x450/F1F5F9/0F172A?text=Dashboard+2'">
+                            </div>
+                            <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-amber-100 rounded-full blur-3xl opacity-50 -z-10"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Business Rules Validation (BSA Core logic) -->
+                <div class="mt-16 bg-[#0F172A] rounded-2xl p-6 md:p-8 text-white shadow-md relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 opacity-10 text-9xl text-amber-500 pointer-events-none"><i class="fa-solid fa-code"></i></div>
+                    <h4 class="text-base font-bold text-amber-400 mb-5 flex items-center gap-2 relative z-10"><i class="fa-solid fa-microchip"></i> Core Business Rules & System Logic</h4>
+                    
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 text-[11px] font-light text-slate-300 relative z-10">
+                        <div class="bg-slate-800/80 border border-slate-700 p-4 rounded-xl">
+                            <strong class="text-white block mb-1 text-xs">1. Quota Lock Validation</strong>
+                            หากยอดคำนวณชิ้นงานซ่อมรายวัน (Main/Sub) เกิน Capacity ที่ตั้งไว้ในระบบ (rizenic_quotas) ระบบจะ Block การบันทึกรับรถเพิ่มทันที เพื่อกัน Overbooking
+                        </div>
+                        <div class="bg-slate-800/80 border border-slate-700 p-4 rounded-xl">
+                            <strong class="text-white block mb-1 text-xs">2. Parts Dependency</strong>
+                            ระบบล็อคสถานะ ห้ามเปลี่ยนสเตตัสเป็น "กำลังซ่อม" เด็ดขาด หากตารางสั่งอะไหล่ (PO) ยังไม่ระบุสถานะว่า "อะไหล่มาครบแล้ว"
+                        </div>
+                        <div class="bg-slate-800/80 border border-slate-700 p-4 rounded-xl">
+                            <strong class="text-white block mb-1 text-xs">3. Auto-Highest Station</strong>
+                            เมื่อช่างติ๊ก Checkbox ข้ามสถานี (เช่น ติ๊ก รอส่งมอบ) ระบบจะคำนวณ Reverse Priority และปรับสเตตัสหลักให้ไปอยู่จุดสูงสุดแบบอัตโนมัติ
+                        </div>
+                        <div class="bg-slate-800/80 border border-slate-700 p-4 rounded-xl">
+                            <strong class="text-white block mb-1 text-xs">4. Anti-Backdating</strong>
+                            มี Logic ล็อคปฏิทิน ไม่อนุญาตให้ผู้ใช้งานใส่วันที่ "เสร็จจริง" หรือวันที่ปิดบิล ย้อนหลังก่อนหน้าปัจจุบัน เพื่อป้องกันการทุจริต KPI
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 2. FULL ERD DIAGRAM (VERTICAL & EXPANDED) -->
+            <div class="bg-white border border-slate-200 p-8 md:p-12 rounded-3xl shadow-sm mb-12 avoid-break relative w-full">
+                <div class="absolute top-0 right-0 p-4 opacity-5 text-8xl text-blue-500 pointer-events-none"><i class="fa-solid fa-project-diagram"></i></div>
+                <div class="flex justify-between items-start mb-6 relative z-10">
+                    <div class="w-full">
+                        <h3 class="font-extrabold text-[#0F172A] text-xl md:text-2xl flex items-center gap-3">
+                            <i class="fa-solid fa-diagram-project text-blue-500"></i> 2. Full Entity Relationship Diagram (ERD)
+                        </h3>
+                        <p class="text-sm text-slate-500 font-bold mt-2 leading-relaxed">
+                            สถาปัตยกรรมฐานข้อมูลระดับ Enterprise ที่สมบูรณ์แบบ ทั้ง 20 ตาราง (PostgreSQL Schema) รองรับการประมวลผลระบบซ่อมสีและตัวถังครบวงจร <br>
+                            <span class="text-xs font-light text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+                                <i class="fa-solid fa-lightbulb"></i> ออกแบบโครงสร้างตาราง Master Data ให้เรียงตัวลงมาในแนวตั้ง เพื่อให้ข้อมูลอ่านง่ายและพอดีกับหน้ากระดาษเมื่อสั่งพิมพ์ PDF โดยไม่ตกขอบ
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Mermaid ERD Vertical Flow -->
+                <!-- ตั้งค่า style ให้ Mermaid ใหญ่ชัดเจนและไม่ล้นออกข้าง -->
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 w-full flex flex-col items-center justify-center overflow-hidden">
+                    <style>
+                        #mermaid-erd-container svg {
+                            width: 100% !important;
+                            max-width: 100% !important;
+                            height: auto !important;
+                            font-family: 'Fira Code', monospace !important;
+                        }
+                    </style>
+                    <div id="mermaid-erd-container" class="w-full flex justify-center">
+                        <!-- กำหนด layoutDirection: TB เพื่อบังคับไหลลงล่าง -->
+                        <pre class="mermaid text-left text-xs">
+%%{init: {'theme': 'neutral', 'er':{ 'layoutDirection': 'TB', 'minEntityWidth': 150}}}%%
+erDiagram
+    %% ==========================================
+    %% DOMAIN 1: CORE SERVICE & TRANSACTIONS
+    %% ==========================================
+    customers {
+        int id PK
+        varchar customer_name
+        varchar phone_number
+        timestamp created_at
+    }
+
+    rizenicreport {
+        bigint id PK
+        date contact_date
+        varchar customer_name
+        varchar phone_number
+        varchar car_plate
+        varchar car_brand
+        varchar car_model
+        varchar vin_no
+        varchar payment_type
+        varchar sa_owner
+        varchar damage_level
+        varchar main_part_name
+        int main_part_qty
+        varchar sub_part_name
+        int sub_part_qty
+        numeric cost_labor
+        numeric cost_part
+        numeric cost_external
+        varchar job_status
+        date target_finish_date
+        date actual_finish_date
+        date delivery_date
+        varchar quotation_no
+        varchar job_order_no
+        varchar ivn_no
+        varchar branch_name
+        date arrived_date
+        text station_kho
+        text station_pou
+        text station_puan
+        text station_pon
+        text station_prak
+        text station_kat
+        text station_qc
+        text station_mag
+        text station_kraj
+        text station_film
+        text station_pak
+        text station_ready
+        date repair_finish_date
+        varchar epc_no
+        varchar part_status
+        varchar department_routing
+        date insurance_pay_date
+        date billing_date
+        varchar claim_no
+    }
+
+    inspection_reports {
+        int id PK
+        varchar job_id FK
+        varchar car_plate
+        varchar branch_name
+        int fuel_level
+        numeric current_mileage
+        varchar job_type
+        jsonb repair_checklist
+        jsonb inventory_checklist
+        jsonb electrical_checklist
+        text customer_signature
+        text inspector_signature
+        varchar claim_no
+    }
+
+    customers ||--o{ rizenicreport : "owns"
+    rizenicreport ||--o{ inspection_reports : "1:N (job_id)"
+
+    %% ==========================================
+    %% DOMAIN 2: E-CLAIM INTEGRATION
+    %% ==========================================
+    eclaim_general {
+        int id PK
+        varchar job_id FK
+        varchar car_province_code
+        varchar car_type_code
+        varchar trim_level
+        int mileage
+        varchar car_condition
+        varchar accident_no
+    }
+
+    eclaim_line_items {
+        int id PK
+        varchar job_id FK
+        varchar part_no FK
+        numeric qty
+        numeric total_price
+    }
+
+    rizenicreport ||--o| eclaim_general : "generates (1:1)"
+    eclaim_general ||--o{ eclaim_line_items : "1:N"
+
+    %% ==========================================
+    %% DOMAIN 3: PARTS & INVENTORY
+    %% ==========================================
+    rizenic_part_orders {
+        int order_id PK
+        varchar qt_no
+        varchar so_no
+        varchar epc_no
+        date order_date
+        date est_arrival_date
+        date received_date
+        varchar car_plate
+        varchar vin_no
+        varchar car_model
+        varchar part_no FK
+        int qty_ordered
+        int qty_received
+        varchar order_status
+        varchar part_name
+        varchar branch_name
+        varchar job_id FK
+    }
+
+    rizenicpartsmaster {
+        int part_id PK
+        varchar part_main_no
+        varchar part_no FK
+        varchar part_name
+        varchar car_model
+        varchar part_category
+        numeric unit_price
+    }
+
+    rizenic_part_locations {
+        int id PK
+        text part_no FK
+        text branch_name
+        text location
+        int safety_stock
+    }
+
+    rizenic_part_inbound {
+        int inbound_id PK
+        date received_date
+        varchar epc_no
+        varchar part_no FK
+        varchar part_name
+        int qty
+        numeric unit_price
+        varchar branch_name
+    }
+
+    rizenic_part_outbound {
+        int outbound_id PK
+        date issue_date
+        varchar part_no FK
+        varchar part_name
+        int qty
+        varchar car_plate
+        varchar so_no
+        numeric unit_price
+        numeric total_price
+        int job_id FK
+    }
+
+    rizenicreport ||--o{ rizenic_part_orders : "requests"
+    rizenicpartsmaster ||--o{ rizenic_part_orders : "references"
+    rizenicpartsmaster ||--o{ rizenic_part_locations : "stored in"
+    rizenicpartsmaster ||--o{ rizenic_part_inbound : "stock in"
+    rizenicpartsmaster ||--o{ rizenic_part_outbound : "stock out"
+
+    %% ==========================================
+    %% DOMAIN 4: CONFIGURATION & SYSTEM MASTERS
+    %% ==========================================
+    rizenicemployeemaster {
+        bigint employee_id PK
+        varchar employee_code
+        varchar employee_name
+        varchar employee_role
+        boolean is_active
+        varchar branch_name
+        varchar username
+        text accessible_pages
+    }
+
+    rizenic_quotas {
+        int id PK
+        varchar quota_type
+        date quota_date
+        varchar branch_name
+        int quota_arrived
+        int quota_target
+        int quota_delivery
+        int quota_main_parts
+        int quota_sub_parts
+    }
+
+    rizenicstatusmaster {
+        varchar status_code FK
+        varchar status_name
+        varchar department
+        varchar route_page
+    }
+
+    rizenic_routing_master {
+        int routing_id
+        varchar routing_name
+    }
+
+    user_column_preferences {
+        int user_id
+        varchar emp_name
+        jsonb hidden_columns
+    }
+
+    rizeniccarmodelmaster { bigint model_id PK }
+    rizeniccustomertypemaster { bigint customer_type_id PK }
+    rizenicinsurancemaster { varchar insurance_code }
+    rizenic_part_status_master { int status_id PK }
+    rizenic_body_parts { int id PK }
+
+    %% Force Vertical Alignment for Masters using invisible links
+    rizenicemployeemaster }o..o{ rizenic_quotas : " "
+    rizenic_quotas }o..o{ rizenicstatusmaster : " "
+    rizenicstatusmaster }o..o{ rizenic_routing_master : " "
+    rizenic_routing_master }o..o{ user_column_preferences : " "
+    user_column_preferences }o..o{ rizeniccarmodelmaster : " "
+    rizeniccarmodelmaster }o..o{ rizeniccustomertypemaster : " "
+    rizeniccustomertypemaster }o..o{ rizenicinsurancemaster : " "
+    rizenicinsurancemaster }o..o{ rizenic_part_status_master : " "
+    rizenic_part_status_master }o..o{ rizenic_body_parts : " "
+                        </pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. DATA DICTIONARY & SQL -->
+            <div class="grid lg:grid-cols-2 gap-8 avoid-break">
+                <!-- Data Dictionary Snippet -->
+                <div class="bg-white border border-slate-200 p-6 rounded-3xl shadow-sm flex flex-col">
+                    <h3 class="text-sm font-bold text-[#0F172A] mb-1 flex items-center gap-2">
+                        <i class="fa-solid fa-table-list text-emerald-500"></i> 3. Data Dictionary (Core Tables)
+                    </h3>
+                    <p class="text-xs text-slate-500 mb-4 font-light">คำอธิบายโครงสร้างตารางหลักที่สำคัญของระบบ</p>
+                    
+                    <div class="flex-1 space-y-4">
+                        <div class="border border-slate-100 rounded-xl overflow-hidden text-[10px] font-code">
+                            <div class="bg-blue-50 text-blue-700 font-bold p-2 border-b border-slate-100 flex justify-between"><span>rizenicreport</span> <span>Core Transaction</span></div>
+                            <div class="p-2 bg-white space-y-1">
+                                <div class="flex justify-between"><span><strong class="text-amber-500">id (PK)</strong></span><span class="text-slate-500">BIGINT</span></div>
+                                <div class="flex justify-between"><span>car_plate</span><span class="text-slate-500">VARCHAR</span></div>
+                                <div class="flex justify-between"><span>job_status <strong class="text-emerald-500">(FK)</strong></span><span class="text-slate-500">VARCHAR</span></div>
+                            </div>
+                        </div>
+                        <div class="border border-slate-100 rounded-xl overflow-hidden text-[10px] font-code">
+                            <div class="bg-purple-50 text-purple-700 font-bold p-2 border-b border-slate-100 flex justify-between"><span>rizenic_part_orders</span> <span>Detail / Inventory</span></div>
+                            <div class="p-2 bg-white space-y-1">
+                                <div class="flex justify-between"><span><strong class="text-amber-500">order_id (PK)</strong></span><span class="text-slate-500">INTEGER</span></div>
+                                <div class="flex justify-between"><span>job_id <strong class="text-blue-500">(FK)</strong></span><span class="text-slate-500">BIGINT</span></div>
+                                <div class="flex justify-between"><span>part_no <strong class="text-emerald-500">(FK)</strong></span><span class="text-slate-500">VARCHAR</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SQL & Analysis -->
+                <div class="bg-[#0F172A] rounded-3xl p-6 shadow-xl text-slate-300 flex flex-col">
+                    <h3 class="text-sm font-bold text-white mb-1 flex items-center gap-2">
+                        <i class="fa-solid fa-terminal text-emerald-400"></i> 4. Practical SQL
+                    </h3>
+                    <p class="text-xs text-slate-400 mb-4 font-light">Query ดึงข้อมูลสรุปต้นทุนและระยะเวลาซ่อมเฉลี่ย เพื่อเชื่อมต่อไปยัง BI Dashboard</p>
+                    
+                    <div class="bg-[#1E293B] rounded-xl p-5 overflow-x-auto text-[11px] font-code leading-relaxed border border-slate-700 flex-1 flex flex-col justify-center">
+<pre><code><span class="text-slate-500 italic">-- คำนวณจำนวนใบงาน และต้นทุนรวม แยกตามประเภทลูกค้า</span>
+<span class="text-pink-400 font-bold">SELECT</span> 
+  c.customer_type,
+  <span class="text-blue-300">COUNT</span>(j.job_id) <span class="text-pink-400 font-bold">AS</span> total_jobs,
+  <span class="text-blue-300">SUM</span>(j.cost_labor + j.cost_parts) <span class="text-pink-400 font-bold">AS</span> total_cost,
+  <span class="text-blue-300">ROUND</span>(<span class="text-blue-300">AVG</span>(j.repair_days), <span class="text-amber-300">1</span>) <span class="text-pink-400 font-bold">AS</span> avg_days
+<span class="text-pink-400 font-bold">FROM</span> service_jobs j
+<span class="text-pink-400 font-bold">JOIN</span> customers c <span class="text-pink-400 font-bold">ON</span> j.customer_id = c.customer_id
+<span class="text-pink-400 font-bold">WHERE</span> j.job_status = <span class="text-amber-300">'COMPLETED'</span>
+<span class="text-pink-400 font-bold">GROUP BY</span> c.customer_type
+<span class="text-pink-400 font-bold">ORDER BY</span> total_cost <span class="text-pink-400 font-bold">DESC</span>;</code></pre>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- MVP (Phase 1) -->
-        <div class="max-w-6xl mx-auto pt-10 border-t border-slate-200">
-            <div class="text-center mb-8">
-                <span class="bg-slate-100 text-slate-600 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-slate-200 mb-2 inline-block">Phase 1 Validation</span>
-                <h3 class="text-2xl font-bold mb-2">Low-Code MVP & Executive BI</h3>
-                <p class="text-sm text-slate-500 font-light max-w-2xl mx-auto">เริ่มต้น Digital Transformation ด้วย MVP เพื่อ validate process ก่อนพัฒนาเป็น Custom Enterprise Application</p>
-            </div>
-
-            <div class="grid lg:grid-cols-2 gap-6">
-                <div class="soft-card bg-white p-6 rounded-3xl border border-slate-200">
-                    <h4 class="font-bold mb-1 text-sm">Operations via AppSheet</h4>
-                    <p class="text-xs text-slate-500 mb-4">Mobile workflow สำหรับบันทึกข้อมูลหน้างานและจัดเก็บเข้า Data Lake</p>
-                    <img src="rizenicm.jpg" alt="RIZENIC AppSheet MVP" loading="lazy" class="w-full h-auto rounded-2xl border border-slate-200" onerror="this.src='https://placehold.co/800x500/F1F5F9/0F172A?text=AppSheet+MVP'">
-                </div>
-
-                <div class="soft-card bg-white p-6 rounded-3xl border border-slate-200">
-                    <h4 class="font-bold mb-1 text-sm">BI Analytics — Looker Studio</h4>
-                    <p class="text-xs text-slate-500 mb-4">วิเคราะห์ Lead Time และ Workload ของช่างแบบ Real-time สำหรับผู้บริหาร</p>
-                    <div class="space-y-2">
-                        <img src="RIZENICD.png" alt="RIZENIC Looker Studio Dashboard" loading="lazy" class="w-full rounded-xl border border-slate-200" onerror="this.src='https://placehold.co/800x400/F1F5F9/0F172A?text=Looker+Studio'">
-                        <img src="RIZENICDD.png" alt="RIZENIC Looker Studio Dashboard 2" loading="lazy" class="w-full rounded-xl border border-slate-200" onerror="this.src='https://placehold.co/800x400/F1F5F9/0F172A?text=Looker+Studio+2'">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
 </section>
-
 
 <!-- ========================================================= -->
 <!-- 02 XPEL -->
@@ -597,14 +928,14 @@
         <div class="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto mb-16">
             <div class="space-y-6">
                 <div class="soft-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                    <h3 class="text-xs font-bold text-rose-600 uppercase tracking-widest mb-3 flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation"></i> Business Problem</h3>
+                    <h3 class="text-xs font-bold text-rose-600 uppercase tracking-widest mb-3"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Business Problem</h3>
                     <p class="text-sm text-slate-600 font-light leading-relaxed">
                         ข้อมูล Order, Inventory และ Warranty แยกการทำงานอยู่คนละระบบ ทำให้เกิดการคีย์ข้อมูลซ้ำซ้อน การประเมินราคาใช้เวลานาน และ Warranty แบบกระดาษทำให้ลูกค้าตรวจสอบประวัติรถได้ยาก
                     </p>
                 </div>
 
                 <div class="soft-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                    <h3 class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass-chart"></i> Process Analysis</h3>
+                    <h3 class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-3"><i class="fa-solid fa-magnifying-glass-chart mr-2"></i>Process Analysis</h3>
                     <p class="text-sm text-slate-600 font-light leading-relaxed">
                         วิเคราะห์ Workflow ตั้งแต่ <strong>Sales ➔ Order ➔ Installation ➔ Inventory ➔ Warranty ➔ After-Sales</strong> เพื่อหาจุดเชื่อมโยงข้อมูลและคอขวดของกระบวนการ
                     </p>
@@ -613,7 +944,7 @@
 
             <div class="space-y-6">
                 <div class="bg-blue-50/60 p-6 rounded-2xl border border-blue-100">
-                    <h3 class="text-xs font-bold uppercase tracking-widest mb-3 flex items-center gap-2"><i class="fa-solid fa-lightbulb text-amber-500"></i> Solution Design</h3>
+                    <h3 class="text-xs font-bold uppercase tracking-widest mb-3"><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Solution Design</h3>
                     <p class="text-sm text-slate-600 font-light leading-relaxed">
                         ออกแบบ Centralized Operational Platform ให้ทุกแผนกทำงานบนฐานข้อมูลเดียวกัน พร้อมยกระดับ Customer Experience ด้วย Digital Warranty
                     </p>
@@ -631,8 +962,8 @@
             </div>
         </div>
 
-        <!-- Digital Warranty Passport (Hover Stack Cards) -->
-        <div class="bg-gradient-to-br from-indigo-950 to-[#0F172A] p-8 md:p-12 rounded-3xl text-white mb-16 shadow-2xl relative overflow-hidden page-break-inside">
+        <!-- Digital Warranty Passport -->
+        <div class="bg-gradient-to-br from-indigo-950 to-[#0F172A] p-8 md:p-12 rounded-3xl text-white mb-16 shadow-2xl relative overflow-hidden avoid-break">
             <div class="absolute top-0 right-0 w-64 h-64 bg-amber-400 opacity-5 rounded-bl-full pointer-events-none"></div>
             
             <div class="text-center mb-10 relative z-10">
@@ -641,23 +972,15 @@
             </div>
 
             <div class="flex flex-col xl:flex-row items-center justify-center gap-12 lg:gap-20 max-w-5xl mx-auto relative z-10">
-                <!-- Cards Stack -->
                 <div class="card-stack no-print">
-                    <div class="card-back bg-black">
-                        <img src="การ์ดรับประกัน XPEL QR_FINAL-01.jpg" alt="XPEL Warranty Card Front" loading="lazy">
-                    </div>
-                    <div class="card-front bg-black">
-                        <img src="การ์ดรับประกัน XPEL QR_FINAL-03.jpg" alt="XPEL Warranty Card Back" loading="lazy">
-                    </div>
+                    <div class="card-back bg-black"><img src="การ์ดรับประกัน XPEL QR_FINAL-01.jpg" alt="XPEL Warranty Card Front" loading="lazy"></div>
+                    <div class="card-front bg-black"><img src="การ์ดรับประกัน XPEL QR_FINAL-03.jpg" alt="XPEL Warranty Card Back" loading="lazy"></div>
                 </div>
-                <!-- For Print Layout -->
-                <div class="hidden print:block mb-6 w-48">
-                    <img src="การ์ดรับประกัน XPEL QR_FINAL-03.jpg" alt="XPEL Warranty" class="w-full rounded-xl border border-slate-700">
-                </div>
+                <div class="hidden print:block mb-6 w-48"><img src="การ์ดรับประกัน XPEL QR_FINAL-03.jpg" alt="XPEL Warranty" class="w-full rounded-xl border border-slate-700"></div>
 
                 <div class="max-w-xl">
                     <p class="text-slate-300 font-light leading-relaxed mb-7">
-                        เปลี่ยนรูปแบบการรับประกันสู่ <strong class="text-white">ระบบออนไลน์ 100%</strong> ลูกค้าสามารถสแกน QR Code ประจำรถเพื่อเข้าถึงสถานะ Warranty และประวัติการบริการแบบ Real-time
+                        เปลี่ยนรูปแบบการรับประกันสู่ <strong class="text-white font-medium border-b border-amber-400/50 pb-1">ระบบออนไลน์ 100%</strong> ลูกค้าสามารถสแกน QR Code ประจำรถเพื่อเข้าถึงสถานะ Warranty และประวัติการบริการแบบ Real-time
                     </p>
                     <div class="grid sm:grid-cols-2 gap-3">
                         <span class="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-emerald-400"><i class="fa-solid fa-qrcode mr-2"></i> Scan & Check</span>
@@ -670,7 +993,7 @@
         </div>
 
         <!-- Customer Portal Mockups -->
-        <div class="max-w-5xl mx-auto mb-16 page-break-inside">
+        <div class="max-w-5xl mx-auto mb-16">
             <div class="text-center mb-8">
                 <h3 class="text-2xl font-bold mb-2">Customer Warranty Portal (O2O)</h3>
                 <p class="text-sm text-slate-500 font-light">Digital customer journey from QR authentication to warranty verification.</p>
@@ -700,7 +1023,7 @@
         </div>
 
         <!-- Digital Service Book (ca.jpg) -->
-        <div class="max-w-5xl mx-auto mb-16 bg-white border border-slate-200 rounded-3xl p-7 md:p-10 shadow-sm page-break-inside">
+        <div class="max-w-5xl mx-auto mb-16 bg-white border border-slate-200 rounded-3xl p-7 md:p-10 shadow-sm">
             <div class="grid md:grid-cols-2 gap-10 items-center">
                 <div>
                     <div class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-3">After-Sales Retention</div>
@@ -717,14 +1040,14 @@
 
                 <div class="flex justify-center">
                     <div class="max-w-[280px]">
-                        <img src="ca.jpg" alt="XPEL Digital Service Book" loading="lazy" class="w-full rounded-[28px] shadow-xl border border-slate-200" onerror="this.src='https://placehold.co/400x800/1C1C1C/F59E0B?text=Service+History'">
+                        <img src="ca.jpg" alt="XPEL Digital Service Book" loading="lazy" class="w-full rounded-[28px] shadow-2xl border border-slate-200" onerror="this.src='https://placehold.co/400x800/1C1C1C/F59E0B?text=Service+History'">
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Internal Operations Tools -->
-        <div class="max-w-5xl mx-auto page-break-inside">
+        <div class="max-w-5xl mx-auto">
             <div class="text-center mb-8">
                 <h3 class="text-2xl font-bold mb-2">Internal Operations Automation</h3>
                 <p class="text-sm text-slate-500 font-light">Operational tools designed around real business rules.</p>
@@ -734,30 +1057,30 @@
                 <div class="soft-card bg-white p-6 rounded-3xl border border-slate-200">
                     <h4 class="font-bold text-sm mb-1">System Management Hub</h4>
                     <p class="text-xs text-slate-500 mb-4 font-light">Centralized access to operational modules.</p>
-                    <img src="xpelm.jpg" alt="XPEL System Management Hub" loading="lazy" class="w-full rounded-xl bg-black border border-slate-100" onerror="this.src='https://placehold.co/600x400/111/333?text=Hub'">
+                    <img src="xpelm.jpg" alt="XPEL System Management Hub" loading="lazy" class="w-full h-40 object-cover object-top rounded-xl bg-black border border-slate-100" onerror="this.src='https://placehold.co/600x400/111/333?text=Hub'">
                 </div>
 
                 <div class="soft-card bg-white p-6 rounded-3xl border border-slate-200">
                     <h4 class="font-bold text-sm mb-1">Admin & Inventory Portal</h4>
                     <p class="text-xs text-slate-500 mb-4 font-light">Automated film stock calculation and monitoring.</p>
-                    <img src="xpel05.jpg" alt="XPEL Inventory Portal" loading="lazy" class="w-full rounded-xl border border-slate-100" onerror="this.src='https://placehold.co/600x300/F1F5F9/0F172A?text=Inventory'">
+                    <img src="xpel05.jpg" alt="XPEL Inventory Portal" loading="lazy" class="w-full h-40 object-cover object-top rounded-xl border border-slate-100" onerror="this.src='https://placehold.co/600x300/F1F5F9/0F172A?text=Inventory'">
                 </div>
 
                 <div class="soft-card bg-white p-6 rounded-3xl border border-slate-200">
                     <h4 class="font-bold text-sm mb-1">Order Management Form</h4>
                     <p class="text-xs text-slate-500 mb-4 font-light">Business Rule Validation สำหรับป้องกันข้อมูลผิดพลาด</p>
-                    <img src="xpelmain1.jpg" alt="XPEL Order Management" loading="lazy" class="w-full rounded-xl border border-slate-100" onerror="this.src='https://placehold.co/600x300/F1F5F9/0F172A?text=Order+Form'">
+                    <img src="xpelmain1.jpg" alt="XPEL Order Management" loading="lazy" class="w-full h-40 object-cover object-top rounded-xl border border-slate-100" onerror="this.src='https://placehold.co/600x300/F1F5F9/0F172A?text=Order+Form'">
                 </div>
 
                 <div class="soft-card bg-white p-6 rounded-3xl border border-slate-200">
                     <h4 class="font-bold text-sm mb-1">Installation Schedule</h4>
                     <p class="text-xs text-slate-500 mb-4 font-light">Multi-filter scheduling เพื่อบริหาร Capacity</p>
-                    <img src="installation-schedule.jpg" alt="XPEL Installation Schedule" loading="lazy" class="w-full rounded-xl border border-slate-100" onerror="this.src='https://placehold.co/600x300/F1F5F9/0F172A?text=Schedule'">
+                    <img src="installation-schedule.jpg" alt="XPEL Installation Schedule" loading="lazy" class="w-full h-40 object-cover object-top rounded-xl border border-slate-100" onerror="this.src='https://placehold.co/600x300/F1F5F9/0F172A?text=Schedule'">
                 </div>
             </div>
 
             <!-- Data Processing Engine -->
-            <div class="mt-8 bg-[#0F172A] rounded-3xl p-7 md:p-8 text-white shadow-xl page-break-inside">
+            <div class="mt-8 bg-[#0F172A] rounded-3xl p-7 md:p-8 text-white shadow-xl">
                 <div class="grid md:grid-cols-2 gap-8 items-center">
                     <div>
                         <div class="text-xs font-bold text-amber-400 uppercase tracking-widest mb-2">Technical Implementation</div>
@@ -804,7 +1127,6 @@
             <p class="text-slate-500 font-light max-w-2xl mx-auto">Custom Transportation Management System designed to improve dispatch visibility and deadline control.</p>
         </div>
 
-        <!-- Role Banner -->
         <div class="bg-slate-50 border border-slate-200 rounded-3xl p-7 md:p-8 max-w-5xl mx-auto mb-12 shadow-sm">
             <div class="flex items-center gap-2 mb-5 border-b border-slate-200 pb-3">
                 <i class="fa-solid fa-user-gear text-blue-600"></i>
@@ -826,7 +1148,7 @@
             </div>
         </div>
 
-        <div class="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto items-center">
+        <div class="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto items-center avoid-break">
             <div>
                 <h3 class="text-2xl font-bold mb-4 text-[#0F172A]">Operations Management System</h3>
                 <p class="text-slate-600 font-light leading-relaxed mb-7">
@@ -858,7 +1180,6 @@
                             <li>Risk of Missing Deadline</li>
                         </ul>
                     </div>
-
                     <div class="bg-emerald-50 border border-emerald-100 p-5 rounded-2xl">
                         <div class="text-xs font-bold text-emerald-700 uppercase mb-2">Target State</div>
                         <ul class="text-xs text-emerald-900/70 space-y-1.5 list-disc pl-4 font-light">
@@ -867,13 +1188,6 @@
                             <li>Proactive Alerts</li>
                         </ul>
                     </div>
-                </div>
-
-                <div class="border-l-4 border-blue-500 pl-4">
-                    <h4 class="text-xs font-bold uppercase tracking-wide text-slate-800">Expected Business Outcome</h4>
-                    <p class="text-sm text-slate-600 font-light mt-1">
-                        Reduce operational risk, improve deadline visibility, and minimize unnecessary costs caused by delayed container returns.
-                    </p>
                 </div>
             </div>
 
@@ -890,20 +1204,20 @@
     </div>
 </section>
 
-
 <!-- ========================================================= -->
-<!-- HOW I WORK -->
+<!-- HOW I WORK & BSA MATRIX -->
 <!-- ========================================================= -->
 
-<section id="how-i-work" class="bg-slate-900 text-white py-20 page-break-inside">
-    <div class="max-w-6xl mx-auto px-5 lg:px-6">
+<section id="how-i-work" class="bg-slate-900 text-white py-20 relative overflow-hidden">
+    <div class="max-w-6xl mx-auto px-5 lg:px-6 relative z-10">
+        
         <div class="text-center mb-12">
             <div class="text-xs font-bold text-blue-400 tracking-[.2em] uppercase mb-3">Business Analysis Approach</div>
             <h2 class="text-3xl font-bold mb-4">How I Work</h2>
             <p class="text-slate-400 font-light text-sm max-w-2xl mx-auto">ผมมองระบบจาก Business Problem ก่อน Technology แล้วค่อยออกแบบ Solution ที่สามารถนำไปใช้งานจริงได้</p>
         </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3">
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3 mb-24">
             <div class="bg-white/5 border border-white/10 rounded-2xl p-4 text-center hover:bg-white/10 transition-colors">
                 <div class="text-blue-400 text-xl mb-3"><i class="fa-solid fa-comments"></i></div>
                 <div class="text-xs font-bold">Stakeholder</div>
@@ -945,15 +1259,87 @@
                 <div class="text-[10px] text-blue-100 mt-1">Data & BI</div>
             </div>
         </div>
+
+        <!-- BSA SKILLS MATRIX -->
+        <div id="bsa-framework" class="border-t border-slate-700 pt-16">
+            <div class="text-center mb-12">
+                <div class="text-xs font-bold text-blue-400 tracking-[.2em] uppercase mb-3">BSA Skills Matrix</div>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-4">โครงสร้างทักษะ 6 มิติ</h2>
+                <p class="text-slate-400 font-light text-sm max-w-3xl mx-auto">ผสานความเข้าใจทางธุรกิจ (Business) เข้ากับตรรกะระบบข้อมูล (Data & Systems)</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Dimension 1 -->
+                <div class="bg-slate-800/50 border border-slate-700 p-6 rounded-2xl hover:-translate-y-1 transition-transform border-t-4 border-t-blue-500">
+                    <div class="w-10 h-10 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-lg mb-4"><i class="fa-solid fa-sitemap"></i></div>
+                    <h3 class="font-bold text-white mb-2">1. Process Improvement</h3>
+                    <ul class="text-xs text-slate-400 space-y-1.5 list-disc pl-4 font-light">
+                        <li>วิเคราะห์กระบวนการ (As-Is / To-Be)</li>
+                        <li>ระบุปัญหาและคอขวด (Bottlenecks)</li>
+                        <li>กำหนด Input / Output แต่ละสถานี</li>
+                    </ul>
+                </div>
+                <!-- Dimension 2 -->
+                <div class="bg-slate-800/50 border border-slate-700 p-6 rounded-2xl hover:-translate-y-1 transition-transform border-t-4 border-t-indigo-500">
+                    <div class="w-10 h-10 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-lg mb-4"><i class="fa-solid fa-list-check"></i></div>
+                    <h3 class="font-bold text-white mb-2">2. Requirement Translation</h3>
+                    <ul class="text-xs text-slate-400 space-y-1.5 list-disc pl-4 font-light">
+                        <li>แปลงความต้องการผู้ใช้เป็น System Spec</li>
+                        <li>กำหนด Business Rules และ Status Logic</li>
+                        <li>ออกแบบเงื่อนไขและสิทธิ์ (Role-based)</li>
+                    </ul>
+                </div>
+                <!-- Dimension 3 -->
+                <div class="bg-slate-800/50 border border-slate-700 p-6 rounded-2xl hover:-translate-y-1 transition-transform border-t-4 border-t-emerald-500">
+                    <div class="w-10 h-10 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg mb-4"><i class="fa-solid fa-cubes"></i></div>
+                    <h3 class="font-bold text-white mb-2">3. System Architecture</h3>
+                    <ul class="text-xs text-slate-400 space-y-1.5 list-disc pl-4 font-light">
+                        <li>ออกแบบ Flow การทำงานของระบบ</li>
+                        <li>ออกแบบโครงสร้างหน้าจอ (Sitemap / UI)</li>
+                        <li>กำหนดจุดเชื่อมต่อข้อมูล (Integration)</li>
+                    </ul>
+                </div>
+                <!-- Dimension 4 -->
+                <div class="bg-slate-800/50 border border-slate-700 p-6 rounded-2xl hover:-translate-y-1 transition-transform border-t-4 border-t-purple-500">
+                    <div class="w-10 h-10 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-lg mb-4"><i class="fa-solid fa-database"></i></div>
+                    <h3 class="font-bold text-white mb-2">4. Data Modeling & P&L</h3>
+                    <ul class="text-xs text-slate-400 space-y-1.5 list-disc pl-4 font-light">
+                        <li>ออกแบบ Entity Relationship (ERD)</li>
+                        <li>เขียน SQL Queries ดึงข้อมูลและทำ Report</li>
+                        <li>ผูกสูตรคำนวณต้นทุน/กำไรขั้นสูง (Array Formula)</li>
+                    </ul>
+                </div>
+                <!-- Dimension 5 -->
+                <div class="bg-slate-800/50 border border-slate-700 p-6 rounded-2xl hover:-translate-y-1 transition-transform border-t-4 border-t-amber-500">
+                    <div class="w-10 h-10 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-lg mb-4"><i class="fa-solid fa-laptop-code"></i></div>
+                    <h3 class="font-bold text-white mb-2">5. Technical Foundations</h3>
+                    <ul class="text-xs text-slate-400 space-y-1.5 list-disc pl-4 font-light">
+                        <li>พัฒนา Web App (Node.js, PostgreSQL)</li>
+                        <li>ใช้งาน REST API / JSON</li>
+                        <li>Low-Code Development (AppSheet / GAS)</li>
+                    </ul>
+                </div>
+                <!-- Dimension 6 -->
+                <div class="bg-slate-800/50 border border-slate-700 p-6 rounded-2xl hover:-translate-y-1 transition-transform border-t-4 border-t-rose-500">
+                    <div class="w-10 h-10 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center text-lg mb-4"><i class="fa-solid fa-file-contract"></i></div>
+                    <h3 class="font-bold text-white mb-2">6. Documentation</h3>
+                    <ul class="text-xs text-slate-400 space-y-1.5 list-disc pl-4 font-light">
+                        <li>Business Requirement Document (BRD)</li>
+                        <li>เขียน User Stories & Acceptance Criteria</li>
+                        <li>นำเสนอแนวทางผ่าน Wireframes และ Diagram</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
     </div>
 </section>
-
 
 <!-- ========================================================= -->
 <!-- TECH STACK -->
 <!-- ========================================================= -->
 
-<section id="techstack" class="bg-slate-50 border-b border-slate-200 py-20 page-break-inside">
+<section id="techstack" class="bg-slate-50 border-b border-slate-200 py-20">
     <div class="max-w-6xl mx-auto px-5 lg:px-6">
         <div class="text-center mb-12">
             <div class="text-xs font-bold text-slate-400 tracking-[.2em] uppercase mb-3">Technical Foundations</div>
@@ -1013,7 +1399,6 @@
     </div>
 </section>
 
-
 <!-- ========================================================= -->
 <!-- OTHER EXPERIENCE & FOOTER -->
 <!-- ========================================================= -->
@@ -1051,12 +1436,22 @@
     </div>
 </footer>
 
-
 <!-- ========================================================= -->
 <!-- JAVASCRIPT -->
 <!-- ========================================================= -->
 
 <script>
+    // 🔥 Mermaid Init: Disable MaxWidth for Scrollable Large ERD
+    mermaid.initialize({ 
+        startOnLoad: true, 
+        theme: 'neutral', 
+        securityLevel: 'loose',
+        er: {
+            useMaxWidth: false,
+            layoutDirection: 'TB'
+        }
+    });
+
     // Mobile Navigation Toggle
     const menuButton = document.getElementById('menuButton');
     const mobileMenu = document.getElementById('mobileMenu');
